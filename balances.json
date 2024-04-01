@@ -1,0 +1,128 @@
+{
+  "balances": [
+    {
+      "name": "John Doe",
+      "balance": 3.5
+    },
+    {
+      "name": "Jane Smith",
+      "balance": 0
+    },
+    {
+      "name": "Bob Brown",
+      "balance": 0
+    },
+    {
+      "name": "Elijah DLC",
+      "balance": 7.5
+    }
+  ],
+  "products": {
+    "drinks": [
+      {
+        "Name": "Body Armor",
+        "Price": 1.25,
+        "img": "img/test.png"
+      },
+      {
+        "Name": "Celcius",
+        "Price": 1.75,
+        "img": "img/test.png"
+      },
+      {
+        "Name": "Alani",
+        "Price": 1.5,
+        "img": "img/test.png"
+      },
+      {
+        "Name": "Gatorade",
+        "Price": 2,
+        "img": "img/test.png"
+      },
+      {
+        "Name": "Red Bull",
+        "Price": 2.5,
+        "img": "img/test.png"
+      },
+      {
+        "Name": "Reign",
+        "Price": 2.5,
+        "img": "img/test.png"
+      },
+      {
+        "Name": "Soda",
+        "Price": 0.75,
+        "img": "img/test.png"
+      },
+      {
+        "Name": "Water",
+        "Price": 0.75,
+        "img": "img/test.png"
+      }
+    ],
+    "freezer": [
+      {
+        "Name": "Candy Bars",
+        "Price": 1.25,
+        "img": "img/test.png"
+      },
+      {
+        "Name": "Chips",
+        "Price": 0.75,
+        "img": "img/test.png"
+      },
+      {
+        "Name": "Cinnamon Rolls",
+        "Price": 1.25,
+        "img": "img/test.png"
+      },
+      {
+        "Name": "Cracker Sandwiches",
+        "Price": 0.75,
+        "img": "img/test.png"
+      },
+      {
+        "Name": "Doughnuts",
+        "Price": 0.75,
+        "img": "img/test.png"
+      },
+      {
+        "Name": "Fruit Snacks",
+        "Price": 0.5,
+        "img": "img/test.png"
+      },
+      {
+        "Name": "Granola Bars",
+        "Price": 0.75,
+        "img": "img/test.png"
+      },
+      {
+        "Name": "Honeybunz",
+        "Price": 1,
+        "img": "img/test.png"
+      },
+      {
+        "Name": "Rice Krispies",
+        "Price": 1.25,
+        "img": "img/test.png"
+      },
+      {
+        "Name": "Trailmix",
+        "Price": 0.75,
+        "img": "img/test.png"
+      }
+    ],
+    "snacks": [
+      {
+        "Name": "Breakfast Sandwiches",
+        "Price": 2,
+        "img": "img/test.png"
+      },
+      {
+        "Name": "Hot Pockets",
+        "Price": 2,
+        "img": "img/test.png"
+      }
+    ]
+  }
+}
