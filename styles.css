@@ -60,8 +60,6 @@ tbody tr:nth-child(even) {
 h2 {
   display: flex;
   flex-direction: column;
-  width: fit-content;
-  height: fit-content;
   font-weight: bold;
   font-size: 2.4rem;
   color: var(--colorP1);
@@ -87,47 +85,10 @@ select{
   background-color: var(--colorP9);
   border-radius: 10px;
   border: none;
-  padding: 5px;
   color: var(--colorP1);
-  width: 500px;
   cursor:pointer;
-  margin-right: 10px;
-  margin-bottom: 20px;
   box-shadow: 3px 3px 5px var(--shadowP1);
 }
-
-.container {
-  display: flex;
-  overflow: scroll;
-}
-
-.container::-webkit-scrollbar{
-  width: 11px;
-}
-
-.container ::-webkit-scrollbar-thumb{
-  border-radius: 5px;
-  background-color: var(--colorR1);
-}
-
-.container ::-webkit-scrollbar-thumb:hover{
-  background-color: var(--colorP5);
-}
-
-.sectionContainer {
-  /*full container for product section*/
-  display: block;
-  height: 100%;
-}
-
-.spacer{
-  height:100px;
-}
-
-.vspacer{
-  width: 100px;
-}
-
 /*╔═════════════════════════════════════════════════════════════╗
   ║                             Home
   ╚═════════════════════════════════════════════════════════════╝*/
@@ -147,22 +108,47 @@ select{
 }
 
 /*╔═════════════════════════════════════════════════════════════╗
+  ║                             Shop 2
+  ╚═════════════════════════════════════════════════════════════╝*/
+  .storeContainer {
+    display: grid; 
+  grid-template-columns: 6fr 4fr; 
+  grid-template-rows: .5fr .5fr 1.5fr 7.5fr; 
+  gap: 0px 0px; 
+  grid-template-areas: 
+    "navBarContainer navBarContainer"
+    "shopTitleContainer cartTitleContainer"
+    "productListContainer accountContainer"
+    "productListContainer cartContainer"; 
+}
+  
+  .navBarContainer { grid-area: navBarContainer; 
+  background-color: red;}
+  
+  .shopTitleContainer { grid-area: shopTitleContainer; 
+    background-color: orange;}
+  
+  .cartTitleContainer { grid-area: cartTitleContainer; 
+    background-color: yellow;}
+  
+  .productListContainer { grid-area: productListContainer; 
+    background-color: green;}
+  
+  .accountContainer { grid-area: accountContainer; 
+    background-color: blue;}
+  
+  .cartContainer { grid-area: cartContainer; 
+    background-color: purple;}
+
+/*╔═════════════════════════════════════════════════════════════╗
   ║                             Shop
   ╚═════════════════════════════════════════════════════════════╝*/
 /* =========================== Navbar ===========================*/
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  width: 100%;
-  height: 75px;
-  margin-bottom: 10px;
-  background-color: var(--colorP7);
-}
-
 .navButton {
-  height: 90%;
-  font-size: 250%;
+  height: 20fr;
+  width: 150fr;
+  object-fit: cover;
+  font-size: 35px;
   border-radius: 10px;
   color: var(--colorP8);
   border-color: transparent;
@@ -173,14 +159,6 @@ select{
 }
 
 /* =========================== Products ===========================*/
-.productContainer {
-  /*full container for product section*/
-  margin-top: 50px;
-  display: block;
-  padding-left: 10%;
-  padding-right: 10%;
-}
-
 .category {
   /*full category block; ex: snack & products*/
   display: flex;
@@ -252,9 +230,4 @@ select{
 .add-to-cart-button:hover {
   /* add to cart button*/
   background-color: var(--colorR1);
-}
-
-/* =========================== Shopping Cart ===========================*/
-.cartContainer{
-  height: 100%;
 }
