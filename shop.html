@@ -82,39 +82,51 @@
 
     //=========================== Products ===========================
     function renderProducts(containerId, products) {
-        var container = document.getElementById(containerId);
-        products.forEach(function (product) {
-            var div = document.createElement("div");
-            div.classList.add("product-item");
-            var nameSpan = document.createElement("span");
-            var br = document.createElement("br");
-            var img = document.createElement("img");
-            var addButton = document.createElement("button");
-            nameSpan.textContent = product.Name;
-            var priceSpan = document.createElement("span");
-            priceSpan.textContent = "$" + product.Price.toFixed(2);
-            nameSpan.appendChild(br);
-            nameSpan.appendChild(priceSpan);
-            nameSpan.classList.add("productName");
-            addButton.textContent = "Add to Cart";
-            addButton.classList.add("add-to-cart-button");
-            addButton.dataset.product = product.Name; // Set data-product attribute
-            var quantitySpan = document.createElement("span");
-            quantitySpan.textContent = "0"; // Initial quantity is 0
-            addButton.addEventListener("click", function () {
-                addToCart(product.Name, product.Price);
-                quantitySpan.textContent = parseInt(quantitySpan.textContent) + 1; // Increment quantity
-            });
-            img.src = product.img;
-            img.alt = product.Name;
-            img.classList.add("product-image");
-            div.appendChild(img);
-            div.appendChild(nameSpan);
-            div.appendChild(addButton);
-            div.appendChild(quantitySpan); // Append quantity span
-            container.appendChild(div);
+    var container = document.getElementById(containerId);
+    products.forEach(function (product) {
+        var itemContainer = document.createElement("div");
+        itemContainer.classList.add("itemContainer");
+        itemContainer.addEventListener("click", function () {
+            addToCart(product.Name, product.Price);
+            updateQuantity(itemContainer);
         });
+
+        var div = document.createElement("div");
+        div.classList.add("product-item");
+        var nameSpan = document.createElement("span");
+        var br = document.createElement("br");
+        var img = document.createElement("img");
+        nameSpan.textContent = product.Name;
+        var priceSpan = document.createElement("span");
+        priceSpan.textContent = "$" + product.Price.toFixed(2);
+        priceSpan.classList.add("itemPrice");
+        nameSpan.appendChild(br);
+        nameSpan.classList.add("productName");
+
+        var quantitySpan = document.createElement("span");
+        quantitySpan.textContent = "0"; // Initial quantity is 0
+        quantitySpan.classList.add("quantitySpan");
+
+        img.src = product.img;
+        img.alt = product.Name;
+        img.classList.add("product-image");
+        div.appendChild(priceSpan)
+        div.appendChild(img);
+        div.appendChild(nameSpan);
+        itemContainer.appendChild(div);
+        // itemContainer.appendChild(quantitySpan);
+        container.appendChild(itemContainer);
+    });
+}
+
+function updateQuantity(itemContainer) {
+    var quantitySpan = itemContainer.querySelector(".quantitySpan");
+    if (quantitySpan) {
+        var currentQuantity = parseInt(quantitySpan.textContent);
+        quantitySpan.textContent = currentQuantity + 1;
     }
+}
+
 
     populateNameDropdown();
 
