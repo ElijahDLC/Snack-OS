@@ -1,21 +1,30 @@
 {
   "balances": [
     {
-      "name": "John Doe",
+      "name": "Dane Syed",
       "balance": 3.5
     },
     {
-      "name": "Jane Smith",
-      "balance": 0
-    },
-    {
-      "name": "Bob Brown",
-      "balance": 0
-    },
-    {
       "name": "Elijah DLC",
+      "balance": 0
+    },
+    {
+      "name": "Gordon Freeman",
+      "balance": 0
+    },
+    {
+      "name": "Yes",
       "balance": 7.5
+    },
+    {
+      "name": "The Engineer",
+      "balance": 0
+    },
+    {
+      "name": "Dr. Isacc Kliener",
+      "balance": 0
     }
+    
   ],
   "products": {
     "drinks": [
