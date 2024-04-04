@@ -11,21 +11,23 @@
 
     <!-- =========================== TopBar =========================== -->
     <div class="navBarContainer">
-   <!-- <a href="index.html">
-        <button class="navButton">X</button>
-      </a> -->
+    <a href="index.html">
+        <button class="navButton">
+            <div class="buttonText">Back</div>
+        </button>
+      </a>
     </div>
 
     <div class="shopTitleContainer">
-    <!--<h2>Shop</h2>-->
-</div>
+        <h2>Shop</h2>
+    </div>
 
     <div class="cartTitleContainer">
-       <!-- <h2>Shopping Cart</h2>-->
+       <h2>Shopping Cart</h2>
     </div>
 
     <div class="productListContainer">
-    <!-- <div class="category">
+    <div class="category">
         <div class="catTitle">Drinks</div>
           <div class="catList" id="drinks"></div>
       </div>
@@ -38,19 +40,19 @@
       <div class="category">
         <div class="catTitle">Snacks</div>
           <div class="catList" id="snacks"></div>
-      </div>-->
+      </div>
     </div> 
 
     <div class="accountContainer">
-        <!-- <select id="name-dropdown">
+        <select class="accountDropdown" id="name-dropdown">
             <option value="" selected disabled>Choose account</option>
         </select>
-        <button onclick="createAccount()">Create Account</button> -->
+        <button class="createAccButton" onclick="createAccount()">Create Account</button>
     </div>
 
 
     <div class="cartContainer">
-        <!-- <table id="cart">
+        <table class="cartTable" id="cart">
             <thead>
                 <tr>
                     <th>Item</th>
@@ -70,10 +72,10 @@
             </tfoot>
         </table>
     
-        <button onclick="checkout()">Checkout</button> -->
+        <button class="checkoutButton" onclick="checkout()">Checkout</button>
     </div>
   </div>
-  <!-- <script>
+  <script>
     var cart = [];
     var names = [];
     var products;
@@ -269,7 +271,7 @@ xhr.send();
     function checkout() {
         var selectedName = document.getElementById("name-dropdown").value;
         if (!selectedName) {
-            alert("Please choose a name.");
+            alert("Please select an account first");
             return;
         }
 
@@ -308,6 +310,6 @@ xhr.send();
 
     xhrProducts.open("GET", "balances.json", true);
     xhrProducts.send();
-</script> -->
+</script>
 </body>
 </html>
