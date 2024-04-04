@@ -12,6 +12,7 @@
   --colorB1: #1634a6;
   --colorB2: #3771d4;
   --colorR1: #f21445;
+  --colorR2: #f5b0bf;
   --colorY1: #3771d4;
   --shadowP1: rgba(0, 0, 0, 0.2);
   --shadowA1: rgba(235, 125, 50, 0.3);
@@ -22,6 +23,7 @@
 body {
   font-family: Arial, sans-serif;
   color: var(--colorP1);
+  overflow-y: hidden;
   background-color: var(--colorP8);
 }
 
@@ -31,22 +33,50 @@ body {
   box-sizing: border-box;
 }
 
+h2 {
+  font-weight: bold;
+  font-size: 3rem;
+  color: var(--colorP1);
+  margin: 0px;
+}
+
+/* =========================== Tables ===========================*/
 table {
   width: 100%;
+  box-shadow: 3px 3px 10px var(--shadowP1);
+  border-radius: 20px;
   border-collapse: collapse;
+  margin-bottom: 20px;
 }
 
 table,
 th,
 td {
   padding: 8px;
+  font-size: 1.5rem;
+}
+
+tr {
+  padding: 0px;
 }
 
 thead {
   background-color: var(--colorP6);
+  color: var(--colorP9);
+  text-align: left;
+  margin: 5px;
+  padding: 5px;
+  height: 75px;
+}
+
+tfoot {
+  background-color: var(--colorP6);
+  color: var(--colorP9);
   border-radius: 20px;
   margin: 5px;
   padding: 5px;
+  font-weight: bold;
+  height: 75px;
 }
 
 tbody tr:nth-child(odd) {
@@ -57,14 +87,15 @@ tbody tr:nth-child(even) {
   background-color: var(--colorP8);
 }
 
-h2 {
-  display: flex;
-  flex-direction: column;
-  font-weight: bold;
-  font-size: 2.4rem;
-  color: var(--colorP1);
+tbody tr:nth-child(odd):hover {
+  background-color: var(--colorR2);
 }
 
+tbody tr:nth-child(even):hover {
+  background-color: var(--colorR2);
+}
+
+/* =========================== Elements ===========================*/
 button {
   font-size: 1.5rem;
   border-radius: 10px;
@@ -76,79 +107,196 @@ button {
 
 button:hover {
   background-color: var(--colorR1);
-  cursor:pointer;
+  cursor: pointer;
 }
 
-select{
+select {
   appearance: none;
   font-size: 1.5rem;
   background-color: var(--colorP9);
   border-radius: 10px;
   border: none;
   color: var(--colorP1);
-  cursor:pointer;
+  cursor: pointer;
   box-shadow: 3px 3px 5px var(--shadowP1);
 }
+
+input {
+  appearance: none;
+  border: none;
+  font-size: 1.5rem;
+  background-color: var(--colorP9);
+  color: var(--colorP1);
+  border-radius: 10px;
+  box-shadow: 3px 3px 5px var(--shadowP1);
+  width: 100px;
+  margin-right: 10px;
+}
+
 /*╔═════════════════════════════════════════════════════════════╗
   ║                             Home
   ╚═════════════════════════════════════════════════════════════╝*/
-.homeContainer{
-  width: 100%;
+.homeContainer {
   display: grid;
-  justify-content: center;
-  padding-top: 20px;
-  padding-left: 10%;
-  padding-right:10%;
+  grid-template-columns: 1fr 10fr 1fr;
+  grid-template-rows: 3fr 7fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "lSpace mTitleContainer rSpace"
+    "lSpace mNavContainer rSpace";
 }
 
-.mainButton{
+.mTitleContainer {
+  grid-area: mTitleContainer;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.mNavContainer {
+  grid-area: mNavContainer;
+  padding: 10px;
+}
+
+.lSpace {
+  grid-area: lSpace;
+}
+.rSpace {
+  grid-area: rSpace;
+}
+
+.mTitleMain{
+  margin-top: 100px;
+  text-align: center;
+  font-size: 12rem;
+  font-weight: bold;
+}
+
+.fontColor{
+  color: var(--colorR1);
+}
+
+.mTitleSub{
+  color: var(--colorP6);
+  font-size: 3.5rem;
+  margin-top: -60px;
+  margin-left: 1000px;
+}
+
+.mainButton {
   font-size: 3rem;
-  min-width: 100%;
-  margin: 15px;
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 15px;
 }
 
 /*╔═════════════════════════════════════════════════════════════╗
-  ║                             Shop 2
+  ║                             Shop 
   ╚═════════════════════════════════════════════════════════════╝*/
-  .storeContainer {
-    display: grid; 
-  grid-template-columns: 6fr 4fr; 
-  grid-template-rows: .5fr .5fr 1.5fr 7.5fr; 
-  gap: 0px 0px; 
-  grid-template-areas: 
+/* =========================== Shop Containers ===========================*/
+.storeContainer {
+  display: grid;
+  grid-template-columns: 6fr 4fr;
+  grid-template-rows: 7.5vh 7.5vh 10vh 75vh;
+  gap: 0px 0px;
+  grid-template-areas:
     "navBarContainer navBarContainer"
     "shopTitleContainer cartTitleContainer"
     "productListContainer accountContainer"
-    "productListContainer cartContainer"; 
+    "productListContainer cartContainer";
 }
-  
-  .navBarContainer { grid-area: navBarContainer; 
-  background-color: red;}
-  
-  .shopTitleContainer { grid-area: shopTitleContainer; 
-    background-color: orange;}
-  
-  .cartTitleContainer { grid-area: cartTitleContainer; 
-    background-color: yellow;}
-  
-  .productListContainer { grid-area: productListContainer; 
-    background-color: green;}
-  
-  .accountContainer { grid-area: accountContainer; 
-    background-color: blue;}
-  
-  .cartContainer { grid-area: cartContainer; 
-    background-color: purple;}
 
-/*╔═════════════════════════════════════════════════════════════╗
-  ║                             Shop
-  ╚═════════════════════════════════════════════════════════════╝*/
+.navBarContainer {
+  grid-area: navBarContainer;
+  padding-top: 5px;
+  padding-left: 20px;
+  background-color: var(--colorP6);
+}
+
+.shopTitleContainer {
+  grid-area: shopTitleContainer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--colorP7);
+  padding-left: 1vw;
+  padding-right: 1vw;
+  object-fit: contain;
+}
+
+.cartTitleContainer {
+  grid-area: cartTitleContainer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--colorP7);
+  padding-left: 1vw;
+  padding-right: 1vw;
+  object-fit: cover;
+}
+
+.productListContainer {
+  grid-area: productListContainer;
+  /* background-color: green; */
+  padding-left: 1vw;
+  padding-right: 1vw;
+  padding-top: 1vw;
+  overflow-y: scroll;
+}
+
+.productListContainer::-webkit-scrollbar {
+  width: 11px;
+}
+
+.productListContainer::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: var(--colorP6);
+}
+
+.productListContainer::-webkit-scrollbar-thumb:hover {
+  background-color: var(--colorR1);
+}
+
+.accountContainer {
+  grid-area: accountContainer;
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  object-fit: cover;
+  align-items: center;
+  justify-content: center;
+}
+
+.cartContainer {
+  grid-area: cartContainer;
+  /* background-color: purple; */
+  padding-left: 1vw;
+  padding-right: 1vw;
+  overflow-y: auto;
+}
+
+.cartContainer::-webkit-scrollbar {
+  width: 11px;
+}
+
+.cartContainer::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: var(--colorP6);
+}
+
+.cartContainer::-webkit-scrollbar-thumb:hover {
+  background-color: var(--colorR1);
+}
+
 /* =========================== Navbar ===========================*/
 .navButton {
-  height: 20fr;
-  width: 150fr;
+  aspect-ratio: 2/1;
+  height: 80%;
   object-fit: cover;
-  font-size: 35px;
   border-radius: 10px;
   color: var(--colorP8);
   border-color: transparent;
@@ -156,6 +304,11 @@ select{
 
 .navButton:hover {
   background-color: var(--colorR1);
+}
+
+.buttonText {
+  object-fit: cover;
+  font-size: 3.5rem;
 }
 
 /* =========================== Products ===========================*/
@@ -172,11 +325,11 @@ select{
   /*title box for each category*/
   font-weight: bold;
   font-size: 2.4rem;
-  color: var(--colorP2);
+  color: var(--colorP9);
   display: flex;
   justify-content: center;
   padding: 10px;
-  background-color: var(--colorP6);
+  background-color: var(--colorR1);
   border-radius: 20px;
 }
 
@@ -230,4 +383,75 @@ select{
 .add-to-cart-button:hover {
   /* add to cart button*/
   background-color: var(--colorR1);
+}
+
+/* =========================== Account ===========================*/
+.accountDropdown {
+  height: 30%;
+  min-width: 60%;
+}
+
+.createAccButton {
+  height: 30%;
+  font-size: 1.4rem;
+}
+
+.chooseAccount {
+  background-color: var(--colorR1);
+}
+
+.cartTable {
+  max-width: 500px;
+}
+
+.checkoutButton{
+  height:50px;
+  width: 500px;
+  background-color: var(--colorR1);
+}
+
+.checkoutButton:hover{
+  background-color: var(--colorR2);
+}
+
+/*╔═════════════════════════════════════════════════════════════╗
+  ║                         Balances
+  ╚═════════════════════════════════════════════════════════════╝*/
+.balancesContainer {
+  display: grid;
+  grid-template-columns: 10fr;
+  grid-template-rows: 7.5vh 7.5vh 85vh;
+  gap: 0px 0px;
+  grid-template-areas:
+    "bnavBarContainer"
+    "accTableTitle"
+    "accTableContainer";
+}
+
+.bnavBarContainer {
+  grid-area: bnavBarContainer;
+  padding-top: 5px;
+  padding-left: 20px;
+  background-color: var(--colorP6);
+}
+
+.accTableTitle {
+  grid-area: accTableTitle;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.accTableContainer {
+  display: flex;
+  justify-content: center;
+  grid-area: accTableContainer;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  object-fit: contain;
+}
+
+.accTable {
+  max-width: 1000px;
+  height: fit-content;
 }
