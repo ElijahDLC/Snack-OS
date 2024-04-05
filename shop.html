@@ -6,322 +6,347 @@
     <title>Simple Shopping Cart</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-<div class="storeContainer">
+<body onload="showPopup()">
+    <div class="storeContainer">
 
-    <!-- =========================== TopBar =========================== -->
-    <div class="navBarContainer">
-    <a href="index.html">
-        <button class="navButton">
-            <div class="buttonText">Back</div>
-        </button>
-      </a>
+        <!-- =========================== TopBar =========================== -->
+        <div class="navBarContainer">
+            <a href="index.html">
+                <button class="navButton">
+                    <div class="buttonText">Back</div>
+                </button>
+            </a>
+        </div>
+
+        <!-- =========================== Shop Title=========================== -->
+        <div class="shopTitleContainer">
+            <h2>Shop</h2>
+        </div>
+
+        <!-- =========================== Cart Title =========================== -->
+        <div class="cartTitleContainer">
+            <h2>Shopping Cart</h2>
+        </div>
+
+        <!-- =========================== Products =========================== -->
+        <div class="productListContainer">
+            <div class="category">
+                <div class="catTitle">Drinks</div>
+                <div class="catList" id="drinks"></div>
+            </div>
+
+            <div class="category">
+                <div class="catTitle">Freezer</div>
+                <div class="catList" id="freezer"></div>
+            </div>
+
+            <div class="category">
+                <div class="catTitle">Snacks</div>
+                <div class="catList" id="snacks"></div>
+            </div>
+        </div> 
+
+        <!-- =========================== Account =========================== -->
+        <div class="accountContainer">
+            <p id="selectedAccount">Selected Account:</p>
+        </div>
+
+        <!-- =========================== Cart =========================== -->
+        <div class="cartContainer">
+            <table class="cartTable" id="cart">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th> # </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="cart-items"></tbody>
+                <tfoot>
+                    <tr>
+                        <td><strong>Total:</strong></td>
+                        <td id="total-price">$0.00</td>
+                        <td></td> 
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+            <button class="checkoutButton" onclick="checkout()">Checkout</button>
+        </div>
     </div>
 
-    <div class="shopTitleContainer">
-        <h2>Shop</h2>
+
+    <!-- =========================== Account Pop Up =========================== -->
+    <div id="popup" class="popup-container">
+        <!-- Popup content -->
+        <div class="popup-content">
+            <h2>Select an Account or Create a New One</h2>
+            <select class="accountDropdown" id="name-dropdown">
+                <option value="" selected disabled>Choose account</option>
+            </select>
+            <button class="createAccButton" onclick="createAccount()">Create Account</button>
+            <button class="close-button" id="closeButton" onclick="hidePopup()" disabled>Select</button>
+        </div>
     </div>
 
-    <div class="cartTitleContainer">
-       <h2>Shopping Cart</h2>
-    </div>
+    <script>
+        var cart = [];
+        var names = [];
+        var products;
 
-    <div class="productListContainer">
-    <div class="category">
-        <div class="catTitle">Drinks</div>
-          <div class="catList" id="drinks"></div>
-      </div>
+        function renderProducts(containerId, products) {
+            var container = document.getElementById(containerId);
+            products.forEach(function (product) {
+                var itemContainer = document.createElement("div");
+                itemContainer.classList.add("itemContainer");
+                itemContainer.addEventListener("click", function () {
+                    addToCart(product.Name, product.Price);
+                    updateQuantity(itemContainer);
+                });
 
-      <div class="category">
-        <div class="catTitle">Freezer</div>
-          <div class="catList" id="freezer"></div>
-      </div>
+                var div = document.createElement("div");
+                div.classList.add("product-item");
+                var nameSpan = document.createElement("span");
+                var br = document.createElement("br");
+                var img = document.createElement("img");
+                nameSpan.textContent = product.Name;
+                var priceSpan = document.createElement("span");
+                priceSpan.textContent = "$" + product.Price.toFixed(2);
+                priceSpan.classList.add("itemPrice");
+                nameSpan.appendChild(br);
+                nameSpan.classList.add("productName");
 
-      <div class="category">
-        <div class="catTitle">Snacks</div>
-          <div class="catList" id="snacks"></div>
-      </div>
-    </div> 
+                var quantitySpan = document.createElement("span");
+                quantitySpan.textContent = "0"; // Initial quantity is 0
+                quantitySpan.classList.add("quantitySpan");
 
-    <div class="accountContainer">
-        <select class="accountDropdown" id="name-dropdown">
-            <option value="" selected disabled>Choose account</option>
-        </select>
-        <button class="createAccButton" onclick="createAccount()">Create Account</button>
-    </div>
+                img.src = product.img;
+                img.alt = product.Name;
+                img.classList.add("product-image");
+                div.appendChild(priceSpan)
+                div.appendChild(img);
+                div.appendChild(nameSpan);
+                itemContainer.appendChild(div);
+                container.appendChild(itemContainer);
+            });
+        }
 
-
-    <div class="cartContainer">
-        <table class="cartTable" id="cart">
-            <thead>
-                <tr>
-                    <th>Item</th>
-                    <th>Price</th>
-                    <th> # </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="cart-items"></tbody>
-            <tfoot>
-                <tr>
-                    <td><strong>Total:</strong></td>
-                    <td id="total-price">$0.00</td>
-                    <td></td> 
-                    <td></td>
-                </tr>
-            </tfoot>
-        </table>
-    
-        <button class="checkoutButton" onclick="checkout()">Checkout</button>
-    </div>
-  </div>
-  <script>
-    var cart = [];
-    var names = [];
-    var products;
-
-    //=========================== Products ===========================
-    function renderProducts(containerId, products) {
-    var container = document.getElementById(containerId);
-    products.forEach(function (product) {
-        var itemContainer = document.createElement("div");
-        itemContainer.classList.add("itemContainer");
-        itemContainer.addEventListener("click", function () {
-            addToCart(product.Name, product.Price);
-            updateQuantity(itemContainer);
-        });
-
-        var div = document.createElement("div");
-        div.classList.add("product-item");
-        var nameSpan = document.createElement("span");
-        var br = document.createElement("br");
-        var img = document.createElement("img");
-        nameSpan.textContent = product.Name;
-        var priceSpan = document.createElement("span");
-        priceSpan.textContent = "$" + product.Price.toFixed(2);
-        priceSpan.classList.add("itemPrice");
-        nameSpan.appendChild(br);
-        nameSpan.classList.add("productName");
-
-        var quantitySpan = document.createElement("span");
-        quantitySpan.textContent = "0"; // Initial quantity is 0
-        quantitySpan.classList.add("quantitySpan");
-
-        img.src = product.img;
-        img.alt = product.Name;
-        img.classList.add("product-image");
-        div.appendChild(priceSpan)
-        div.appendChild(img);
-        div.appendChild(nameSpan);
-        itemContainer.appendChild(div);
-        // itemContainer.appendChild(quantitySpan);
-        container.appendChild(itemContainer);
-    });
-}
-
-function updateQuantity(itemContainer) {
-    var quantitySpan = itemContainer.querySelector(".quantitySpan");
-    if (quantitySpan) {
-        var currentQuantity = parseInt(quantitySpan.textContent);
-        quantitySpan.textContent = currentQuantity + 1;
-    }
-}
-
-
-    populateNameDropdown();
-
-    var xhrProducts = new XMLHttpRequest();
-    xhrProducts.onreadystatechange = function () {
-        if (xhrProducts.readyState === XMLHttpRequest.DONE) {
-            if (xhrProducts.status === 200) {
-                products = JSON.parse(xhrProducts.responseText);
-                renderProducts("drinks", products.products.drinks);
-                renderProducts("freezer", products.products.freezer);
-                renderProducts("snacks", products.products.snacks);
-            } else {
-                console.error("Failed to load products.");
+        function updateQuantity(itemContainer) {
+            var quantitySpan = itemContainer.querySelector(".quantitySpan");
+            if (quantitySpan) {
+                var currentQuantity = parseInt(quantitySpan.textContent);
+                quantitySpan.textContent = currentQuantity + 1;
             }
         }
-    };
 
-//=========================== Account ===========================
-function populateNameDropdown() {
-var xhr = new XMLHttpRequest();
-xhr.onreadystatechange = function () {
-    if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-            var response = JSON.parse(xhr.responseText);
-            console.log("Response:", response); // Check the structure of the response
-            names = response.balances;
-            var dropdown = document.getElementById("name-dropdown");
-            names.forEach(function (nameObj) {
-                var option = document.createElement("option");
-                option.text = nameObj.name;
-                dropdown.add(option);
-            });
-        } else {
-            console.error("Failed to load names.");
-        }
-    }
-};
-xhr.open("GET", "balances.json", true);
-xhr.send();
-}
-
-
-    
-    
-    ////=========================== Create Account ===========================
-    function createAccount() {
-        var newName = prompt("Enter your name:");
-        if (newName === null || newName.trim() === "") {
-            alert("Name cannot be empty.");
-            return;
-        }
-
-        if (names.some((nameObj) => nameObj.name === newName)) {
-            alert("Name already exists. Please choose a different name.");
-            return;
-        }
-
-        var insertIndex = names.findIndex((nameObj) => nameObj.name > newName);
-        if (insertIndex === -1) {
-            insertIndex = names.length;
-        }
-
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    alert("Account created successfully for " + newName + "!");
-                    names.splice(insertIndex, 0, { name: newName, balance: 0 });
-                    populateNameDropdown();
+        var xhrProducts = new XMLHttpRequest();
+        xhrProducts.onreadystatechange = function () {
+            if (xhrProducts.readyState === XMLHttpRequest.DONE) {
+                if (xhrProducts.status === 200) {
+                    products = JSON.parse(xhrProducts.responseText);
+                    renderProducts("drinks", products.products.drinks);
+                    renderProducts("freezer", products.products.freezer);
+                    renderProducts("snacks", products.products.snacks);
                 } else {
-                    alert("Failed to create account.");
+                    console.error("Failed to load products.");
                 }
             }
         };
-        xhr.open("POST", "http://localhost:3000/create-account", true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.send(JSON.stringify({ name: newName }));
-    }
 
+        function showPopup() {
+            var popup = document.getElementById('popup');
+            popup.style.display = 'block'; // Display the popup
+            // Populate the dropdown menu with account names
+            populateNameDropdown();
+        }
 
-    //=========================== Add to Cart ===========================
-    function addToCart(name, price) {
-        var foundItem = cart.find(item => item.Name === name);
-        if (foundItem) {
-            foundItem.Quantity++;
-        } else {
-            cart.push({ Name: name, Price: price, Quantity: 1 });
-        }            
-        renderCart();
-    }
+        function hidePopup() {
+            var popup = document.getElementById('popup');
+            popup.style.display = 'none'; // Hide the popup
+        }
 
-    //=========================== Remove from Cart ===========================
-    function removeFromCart(name) {
-        var foundIndex = cart.findIndex(item => item.Name === name);
-        if (foundIndex !== -1) {
-            var item = cart[foundIndex];
-            if (item.Quantity > 1) {
-                item.Quantity--;
-            } else {
-                cart.splice(foundIndex, 1);
-                item.Quantity--;
+        function populateNameDropdown() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        names = response.balances;
+                        var dropdown = document.getElementById("name-dropdown");
+                        dropdown.addEventListener("change", function () {
+                            var selectedAccount = document.getElementById("selectedAccount");
+                            selectedAccount.textContent = "Selected Account: " + dropdown.value;
+                            var closeButton = document.getElementById("closeButton");
+                            closeButton.disabled = false;
+                        });
+                        dropdown.innerHTML = ""; // Clear previous options
+                        var defaultOption = document.createElement("option");
+                        defaultOption.value = "";
+                        defaultOption.text = "Choose account";
+                        defaultOption.disabled = true;
+                        defaultOption.selected = true;
+                        dropdown.appendChild(defaultOption);
+                        names.forEach(function (nameObj) {
+                            var option = document.createElement("option");
+                            option.value = nameObj.name;
+                            option.text = nameObj.name;
+                            dropdown.appendChild(option);
+                        });
+
+                        // Enable or disable close button based on account selection
+                        var closeButton = document.getElementById("closeButton");
+                        if (dropdown.value === "") {
+                            closeButton.disabled = true;
+                        } else {
+                            closeButton.disabled = false;
+                        }
+                    } else {
+                        console.error("Failed to load names.");
+                    }
+                }
+            };
+            xhr.open("GET", "balances.json", true);
+            xhr.send();
+        }
+
+        function createAccount() {
+            var newName = prompt("Enter your name:");
+            if (newName === null || newName.trim() === "") {
+                alert("Name cannot be empty.");
+                return;
             }
-            // Update quantity displayed under "Add to Cart" button
-            var addButton = document.querySelector(`button[data-product="${name}"]`);
-            if (addButton) {
-                var quantitySpan = addButton.nextElementSibling; // Get the span element next to the button
-                if (quantitySpan) {
-                    quantitySpan.textContent = item.Quantity; // Update quantity
+
+            if (names.some((nameObj) => nameObj.name === newName)) {
+                alert("Name already exists. Please choose a different name.");
+                return;
+            }
+
+            var insertIndex = names.findIndex((nameObj) => nameObj.name > newName);
+            if (insertIndex === -1) {
+                insertIndex = names.length;
+            }
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        alert("Account created successfully for " + newName + "!");
+                        names.splice(insertIndex, 0, { name: newName, balance: 0 });
+                        populateNameDropdown();
+                    } else {
+                        alert("Failed to create account.");
+                    }
+                }
+            };
+            xhr.open("POST", "http://localhost:3000/create-account", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify({ name: newName }));
+        }
+
+        function addToCart(name, price) {
+            var foundItem = cart.find(item => item.Name === name);
+            if (foundItem) {
+                foundItem.Quantity++;
+            } else {
+                cart.push({ Name: name, Price: price, Quantity: 1 });
+            }
+            renderCart();
+        }
+
+        function removeFromCart(name) {
+            var foundIndex = cart.findIndex(item => item.Name === name);
+            if (foundIndex !== -1) {
+                var item = cart[foundIndex];
+                if (item.Quantity > 1) {
+                    item.Quantity--;
+                } else {
+                    cart.splice(foundIndex, 1);
+                    item.Quantity--;
                 }
             }
+            renderCart();
         }
-        renderCart();
-    }
 
-    //=========================== Render Cart ===========================
-    function renderCart() {
-        var cartItems = document.getElementById("cart-items");
-        cartItems.innerHTML = "";
+        function renderCart() {
+            var cartItems = document.getElementById("cart-items");
+            cartItems.innerHTML = "";
 
-        var totalPrice = 0;
+            var totalPrice = 0;
 
-        cart.forEach(function (item) {
-            var row = document.createElement("tr");
-            var nameCell = document.createElement("td");
-            var priceCell = document.createElement("td");
-            var quantityCell = document.createElement("td");
-            var actionCell = document.createElement("td");
-            var removeButton = document.createElement("button");
-            removeButton.textContent = "X";
-            removeButton.addEventListener("click", function () {
-                removeFromCart(item.Name);
+            cart.forEach(function (item) {
+                var row = document.createElement("tr");
+                var nameCell = document.createElement("td");
+                var priceCell = document.createElement("td");
+                var quantityCell = document.createElement("td");
+                var actionCell = document.createElement("td");
+                var removeButton = document.createElement("button");
+                removeButton.textContent = "X";
+                removeButton.addEventListener("click", function () {
+                    removeFromCart(item.Name);
+                });
+
+                nameCell.textContent = item.Name;
+                priceCell.textContent = "$" + (item.Price * item.Quantity).toFixed(2);
+                quantityCell.textContent = item.Quantity;
+                actionCell.appendChild(removeButton);
+
+                row.appendChild(nameCell);
+                row.appendChild(priceCell);
+                row.appendChild(quantityCell);
+                row.appendChild(actionCell);
+
+                cartItems.appendChild(row);
+
+                totalPrice += item.Price * item.Quantity;
             });
 
-            nameCell.textContent = item.Name;
-            priceCell.textContent = "$" + (item.Price * item.Quantity).toFixed(2);
-            quantityCell.textContent = item.Quantity;
-            actionCell.appendChild(removeButton);
-
-            row.appendChild(nameCell);
-            row.appendChild(priceCell);
-            row.appendChild(quantityCell);
-            row.appendChild(actionCell);
-
-            cartItems.appendChild(row);
-
-            totalPrice += item.Price * item.Quantity;
-        });
-
-        document.getElementById("total-price").textContent =
-            "$" + totalPrice.toFixed(2);
-    }
-
-    //=========================== Checkout ===========================
-    function checkout() {
-        var selectedName = document.getElementById("name-dropdown").value;
-        if (!selectedName) {
-            alert("Please select an account first");
-            return;
+            document.getElementById("total-price").textContent =
+                "$" + totalPrice.toFixed(2);
         }
 
-        var totalPrice = parseFloat(
-            document.getElementById("total-price").textContent.substring(1)
-        );
-        if (isNaN(totalPrice)) {
-            alert("Total price is not valid.");
-            return;
-        }
-
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    alert(
-                        "Checkout completed for " +
-                        selectedName +
-                        "! Total amount: $" +
-                        totalPrice.toFixed(2)
-                    );
-                    exportToExcel();
-                    cart = [];
-                    renderCart();
-                } else {
-                    alert("Failed to update balances.");
-                }
+        function checkout() {
+            var selectedName = document.getElementById("name-dropdown").value;
+            if (!selectedName) {
+                alert("Please select an account first"); 
+                return;
             }
-        };
-        xhr.open("POST", "http://localhost:3000/update-balances", true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.send( 
-            JSON.stringify({ name: selectedName, totalPrice: totalPrice })
-        );
-    }
 
-    xhrProducts.open("GET", "balances.json", true);
-    xhrProducts.send();
-</script>
+            var totalPrice = parseFloat(
+                document.getElementById("total-price").textContent.substring(1)
+            );
+            if (isNaN(totalPrice)) {
+                alert("Total price is not valid.");
+                return;
+            }
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        alert(
+                            "Checkout completed for " +
+                            selectedName +
+                            "! Total amount: $" +
+                            totalPrice.toFixed(2)
+                        );
+                        exportToExcel();
+                        cart = [];
+                        renderCart();
+                    } else {
+                        alert("Failed to update balances.");
+                    }
+                }
+            };
+            xhr.open("POST", "http://localhost:3000/update-balances", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(
+                JSON.stringify({ name: selectedName, totalPrice: totalPrice })
+            );
+        }
+
+        xhrProducts.open("GET", "balances.json", true);
+        xhrProducts.send();
+    </script>
 </body>
 </html>
