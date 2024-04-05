@@ -9,28 +9,38 @@
 <body>
 
     <!-- =========================== TopBar =========================== -->
-    <div class="topbar">
-      <a href="index.html">
-        <button class="navButton">Back</button>
-      </a>
-    </div>
+<div class="balancesContainer">  
+    <div class="bnavBarContainer">
+        <a href="index.html">
+            <button class="navButton">
+                <div class="buttonText">Back</div>
+            </button>
+          </a>
+        </div>
 
-<h2>Current Balances</h2>
 
-<table id="balances-table">
+<div class="accTableTitle">
+    <h2>Current Balances</h2>
+</div>
+
+<div class="accTableContainer">
+<table class="accTable" id="balances-table">
     <thead>
         <tr>
             <th>Name</th>
             <th>Balance</th>
-            <th>Delete</th>
-            <th>Reset</th>
+            <th>Clear</th>
             <th>Subtract</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody id="balances-data">
+        <tbody>
         <!-- Balance data will be added dynamically here -->
     </tbody>
 </table>
+</div>
+</div>
 
 <script>
 function fetchBalances() {
@@ -76,11 +86,11 @@ function fetchBalances() {
 
             nameCell.textContent = account.name;
             balanceCell.textContent = "$" + account.balance.toFixed(2);
-            deleteButton.textContent = "Delete";
+            deleteButton.textContent = "X";
             deleteButton.classList.add("delete-button");
-            resetButton.textContent = "Reset";
+            resetButton.textContent = "Clear";
             resetButton.classList.add("reset-button");
-            subtractButton.textContent = "Subtract";
+            subtractButton.textContent = "Update";
             subtractButton.classList.add("subtract-button");
             amountInput.type = "number";
             amountInput.step = "0.01";
@@ -119,9 +129,9 @@ function fetchBalances() {
 
             row.appendChild(nameCell);
             row.appendChild(balanceCell);
-            row.appendChild(deleteCell);
             row.appendChild(resetCell);
             row.appendChild(subtractCell);
+            row.appendChild(deleteCell);
 
             balancesData.appendChild(row);
         });
