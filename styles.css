@@ -111,6 +111,10 @@ button:hover {
   cursor: pointer;
 }
 
+button:active{
+  transform: translateY(4px);
+}
+
 select {
   appearance: none;
   font-size: 1.5rem;
@@ -401,6 +405,10 @@ input {
 .itemContainer:hover{
   background-color: var(--colorR2);
   cursor: pointer;
+}
+
+.itemContainer:active{
+  transform: translateY(4px);
 }
 
 .itemContainer .quantitySpan {
