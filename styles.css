@@ -12,11 +12,11 @@
   --colorP9: #ffffff;
   --colorB1: #1634a6;
   --colorB2: #3771d4;
-  --colorR1: #f21445;
+  --colorR1: rgb(242, 20, 69);
   --colorR2: #f5b0bf;
   --colorY1: #3771d4;
   --shadowP1: rgba(0, 0, 0, 0.2);
-  --shadowA1: rgba(235, 125, 50, 0.3);
+  --shadowR1: rgba(242, 20, 69, 0.3);
   --animation-duration: 150ms;
   --animation-timing-curve: ease-in-out;
 }
@@ -82,18 +82,24 @@ tfoot {
 
 tbody tr:nth-child(odd) {
   background-color: var(--colorP7);
+  transition: .1s;
 }
 
 tbody tr:nth-child(even) {
   background-color: var(--colorP8);
+  transition: .1s;
 }
 
 tbody tr:nth-child(odd):hover {
   background-color: var(--colorR2);
+  transform: scale(1.02);
+  transition: .1s;
 }
 
 tbody tr:nth-child(even):hover {
   background-color: var(--colorR2);
+  transform: scale(1.02);
+  transition: .1s;
 }
 
 /* =========================== Elements ===========================*/
@@ -104,11 +110,14 @@ button {
   color: var(--colorP8);
   border-color: transparent;
   box-shadow: 3px 3px 5px var(--shadowP1);
+  transition: .1s;
 }
 
 button:hover {
   background-color: var(--colorR1);
   cursor: pointer;
+  transform: scale(1.05);
+  transition: .1s;
 }
 
 button:active{
@@ -124,6 +133,13 @@ select {
   color: var(--colorP1);
   cursor: pointer;
   box-shadow: 3px 3px 5px var(--shadowP1);
+  transition: .1s;
+}
+
+select:hover{
+  transform: scale(1.02);
+  transition: .1s;
+  box-shadow: 3px 3px 5px var(--shadowR1);
 }
 
 input {
@@ -400,11 +416,14 @@ input {
   margin: 5px;
   border-radius: 20px;
   background-color: var(--colorP65);
+  transition: .1s;
 }
 
 .itemContainer:hover{
   background-color: var(--colorR2);
   cursor: pointer;
+  transform: scale(1.1);
+  transition: .1s;
 }
 
 .itemContainer:active{
@@ -422,12 +441,12 @@ input {
 
 /* =========================== Account ===========================*/
 .accountDropdown {
-  height: 30%;
+  height: 40%;
   min-width: 60%;
 }
 
 .createAccButton {
-  height: 30%;
+  height: 40%;
   font-size: 1.4rem;
 }
 
