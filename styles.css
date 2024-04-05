@@ -467,6 +467,61 @@ input {
   background-color: var(--colorR2);
 }
 
+
+.popup-container {
+  display: none; /* Hide the popup by default */
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 9999; /* Ensure the popup appears on top */
+  overflow: auto; /* Enable scrolling if needed */
+}
+
+/* Popup content */
+.popup-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* Center the popup vertically and horizontally */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  max-width: 400px; /* Set a maximum width */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.close-button {
+    z-index: 9999;
+}
+
+.close-button:disabled {
+  color: var(--colorP65);
+  background-color: var(--colorP7)
+}
+
+.close-button:disabled:hover {
+  transform: scale(1);
+  cursor: auto;
+}
+
 /*╔═════════════════════════════════════════════════════════════╗
   ║                         Balances
   ╚═════════════════════════════════════════════════════════════╝*/
