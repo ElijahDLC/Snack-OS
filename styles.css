@@ -137,7 +137,6 @@ select {
 }
 
 select:hover{
-  transform: scale(1.02);
   transition: .1s;
   box-shadow: 3px 3px 5px var(--shadowR1);
 }
