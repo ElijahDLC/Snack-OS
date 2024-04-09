@@ -1,12 +1,8 @@
 {
   "balances": [
     {
-      "name": "Dane Syed",
-      "balance": 3.5
-    },
-    {
       "name": "Elijah DLC",
-      "balance": 0
+      "balance": -5
     },
     {
       "name": "Gordon Freeman",
@@ -29,106 +25,116 @@
   "products": {
     "drinks": [
       {
-        "Name": "Body Armor",
+        "Name": "bodyArmor",
         "Price": 1.25,
-        "img": "img/test.png"
+        "img": "img/bodyArmor.png"
       },
       {
-        "Name": "Celcius",
+        "Name": "Celsius",
         "Price": 1.75,
-        "img": "img/test.png"
+        "img": "img/celsius.png"
       },
       {
         "Name": "Alani",
-        "Price": 1.5,
-        "img": "img/test.png"
+        "Price": 1.75,
+        "img": "img/alani.png"
+      },
+      {
+        "Name": "Frappuccino",
+        "Price": 2.00,
+        "img": "img/frapp.png"
       },
       {
         "Name": "Gatorade",
-        "Price": 2,
-        "img": "img/test.png"
+        "Price": 1.50,
+        "img": "img/gatorade.png"
       },
       {
         "Name": "Red Bull",
-        "Price": 2.5,
-        "img": "img/test.png"
+        "Price": 2,
+        "img": "img/redBull.png"
       },
       {
         "Name": "Reign",
         "Price": 2.5,
-        "img": "img/test.png"
+        "img": "img/reign.png"
       },
       {
         "Name": "Soda",
         "Price": 0.75,
-        "img": "img/test.png"
+        "img": "img/coke.png"
       },
       {
         "Name": "Water",
         "Price": 0.75,
-        "img": "img/test.png"
-      }
-    ],
-    "freezer": [
-      {
-        "Name": "Candy Bars",
-        "Price": 1.25,
-        "img": "img/test.png"
-      },
-      {
-        "Name": "Chips",
-        "Price": 0.75,
-        "img": "img/test.png"
-      },
-      {
-        "Name": "Cinnamon Rolls",
-        "Price": 1.25,
-        "img": "img/test.png"
-      },
-      {
-        "Name": "Cracker Sandwiches",
-        "Price": 0.75,
-        "img": "img/test.png"
-      },
-      {
-        "Name": "Doughnuts",
-        "Price": 0.75,
-        "img": "img/test.png"
-      },
-      {
-        "Name": "Fruit Snacks",
-        "Price": 0.5,
-        "img": "img/test.png"
-      },
-      {
-        "Name": "Granola Bars",
-        "Price": 0.75,
-        "img": "img/test.png"
-      },
-      {
-        "Name": "Honeybunz",
-        "Price": 1,
-        "img": "img/test.png"
-      },
-      {
-        "Name": "Rice Krispies",
-        "Price": 1.25,
-        "img": "img/test.png"
-      },
-      {
-        "Name": "Trailmix",
-        "Price": 0.75,
-        "img": "img/test.png"
+        "img": "img/water.png"
       }
     ],
     "snacks": [
       {
-        "Name": "Breakfast Sandwiches",
-        "Price": 2,
-        "img": "img/test.png"
+        "Name": "Candy Bars",
+        "Price": 1.25,
+        "img": "img/candy.png"
       },
       {
-        "Name": "Hot Pockets",
+        "Name": "Chips",
+        "Price": 0.75,
+        "img": "img/chips.png"
+      },
+      {
+        "Name": "Cinnamon Rolls",
+        "Price": 1.25,
+        "img": "img/bigTexas.png"
+      },
+      {
+        "Name": "Cracker Sandwiches",
+        "Price": 0.75,
+        "img": "img/cracker.png"
+      },
+      {
+        "Name": "Donuts",
+        "Price": 0.75,
+        "img": "img/donut.png"
+      },
+      {
+        "Name": "Fruit Snacks",
+        "Price": 0.5,
+        "img": "img/fruitSnack.png"
+      },
+      {
+        "Name": "Granola Bars",
+        "Price": 0.75,
+        "img": "img/granola.png"
+      },
+      {
+        "Name": "Honeybunz",
+        "Price": 1,
+        "img": "img/honeybunz.png"
+      },
+      {
+        "Name": "Mac & Cheese",
+        "Price": 1.5,
+        "img": "img/mac&Cheese.png"
+      },
+      {
+        "Name": "PopTarts",
+        "Price": 1,
+        "img": "img/popTart.png"
+      },
+      {
+        "Name": "Ramen",
+        "Price": 1.25,
+        "img": "img/ramen.png"
+      },
+      {
+        "Name": "Trailmix",
+        "Price": 0.75,
+        "img": "img/trailmix.png"
+      }
+    ],
+    "freezer": [
+      {
+        "Name": "Breakfast Sandwiches",
         "Price": 2,
         "img": "img/test.png"
       }
