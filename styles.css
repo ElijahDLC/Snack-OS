@@ -202,8 +202,8 @@ input {
 .mTitleSub{
   color: var(--colorP6);
   font-size: 3.5rem;
-  margin-top: -60px;
-  margin-left: 1000px;
+  margin-top: -30px;
+  margin-left: 975px;
 }
 
 .mainButton {
@@ -367,10 +367,11 @@ input {
 
 .product-image {
   /*product image & container*/
+  object-fit: contain;
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 100%; /* Adjust width as needed */
+  width: 200px; /* Adjust width as needed */
   height: 200px; /* Adjust height as needed */
   border-radius: 20px;
   background-color: var(--colorP5);
@@ -576,4 +577,12 @@ input {
 .accTable {
   max-width: 1000px;
   height: fit-content;
+}
+
+.positive-balance {
+  color: red;
+}
+
+.negative-balance {
+  color: green;
 }
