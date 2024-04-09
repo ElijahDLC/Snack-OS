@@ -1,72 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Current Balances</title>
-<link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Balances</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-    <!-- =========================== TopBar =========================== -->
+<!-- =========================== TopBar =========================== -->
 <div class="balancesContainer">  
     <div class="bnavBarContainer">
         <a href="index.html">
             <button class="navButton">
                 <div class="buttonText">Back</div>
             </button>
-          </a>
-        </div>
+        </a>
+    </div>
 
+    <div class="accTableTitle">
+        <h2>Current Balances</h2>
+    </div>
 
-<div class="accTableTitle">
-    <h2>Current Balances</h2>
-</div>
-
-<div class="accTableContainer">
-<table class="accTable" id="balances-table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Balance</th>
-            <th>Clear</th>
-            <th>Subtract</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody id="balances-data">
-        <tbody>
-        <!-- Balance data will be added dynamically here -->
-    </tbody>
-</table>
-</div>
+    <div class="accTableContainer">
+        <table class="accTable" id="balances-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Balance</th>
+                    <th>Clear</th>
+                    <th>Subtract</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody id="balances-data">
+                <!-- Balance data will be added dynamically here -->
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
-function fetchBalances() {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                var data = JSON.parse(xhr.responseText);
-                var balances = data.balances; // Access the balances array inside the data object
-                console.log(balances); // Log the balances variable to verify its structure
-                if (Array.isArray(balances)) {
-                    balances.sort((a, b) => a.name.localeCompare(b.name));
-                    displayBalances(balances);
+    function fetchBalances() {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    var balances = data.balances; // Access the balances array inside the data object
+                    console.log(balances); // Log the balances variable to verify its structure
+                    if (Array.isArray(balances)) {
+                        balances.sort((a, b) => a.name.localeCompare(b.name));
+                        displayBalances(balances);
+                    } else {
+                        console.error("Balances is not an array:", balances);
+                    }
                 } else {
-                    console.error("Balances is not an array:", balances);
+                    console.error("Failed to load balances.");
                 }
-            } else {
-                console.error("Failed to load balances.");
             }
-        }
-    };
-    xhr.open("GET", "balances.json", true);
-    xhr.send();
-}
-
-
+        };
+        xhr.open("GET", "balances.json", true);
+        xhr.send();
+    }
 
     function displayBalances(balances) {
         var balancesData = document.getElementById("balances-data");
@@ -86,6 +82,7 @@ function fetchBalances() {
 
             nameCell.textContent = account.name;
             balanceCell.textContent = "$" + account.balance.toFixed(2);
+            balanceCell.classList.add(account.balance > 0 ? "positive-balance" : "negative-balance");
             deleteButton.textContent = "X";
             deleteButton.classList.add("delete-button");
             resetButton.textContent = "Clear";
