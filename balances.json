@@ -1,6 +1,10 @@
 {
   "balances": [
     {
+      "name": "Dane Syed",
+      "balance": 3.5
+    },
+    {
       "name": "Elijah DLC",
       "balance": -5
     },
@@ -136,7 +140,22 @@
       {
         "Name": "Breakfast Sandwiches",
         "Price": 2,
-        "img": "img/test.png"
+        "img": "img/BSandwich.png"
+      },
+      {
+        "Name": "Chicken Sandwiches",
+        "Price": 2,
+        "img": "img/CSandwich.png"
+      },
+      {
+        "Name": "Hot Pocket",
+        "Price": 1.5,
+        "img": "img/HotPocket.png"
+      },
+      {
+        "Name": "Pancake Sausage",
+        "Price": 1,
+        "img": "img/PanSausage.png"
       }
     ]
   }
