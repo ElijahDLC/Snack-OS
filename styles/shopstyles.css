@@ -1,0 +1,384 @@
+:root {
+  --colorP0: #333333;
+  --colorP1: #555555;
+  --colorP2: #777777;
+  --colorP3: #888888;
+  --colorP4: #999999;
+  --colorP5: #aaaaaa;
+  --colorP6: #bbbbbb;
+  --colorP65: #cccccc;
+  --colorP7: #dddddd;
+  --colorP8: #eeeeee;
+  --colorP9: #ffffff;
+  --colorB1: #1634a6;
+  --colorB2: #3771d4;
+  --colorR1: rgb(242, 20, 69);
+  --colorR2: #f5b0bf;
+  --colorY1: #3771d4;
+  --shadowP1: rgba(0, 0, 0, 0.2);
+  --shadowR1: rgba(242, 20, 69, 0.3);
+  --animation-duration: 150ms;
+  --animation-timing-curve: ease-in-out;
+}
+/*╔═════════════════════════════════════════════════════════════╗
+  ║                             Shop 
+  ╚═════════════════════════════════════════════════════════════╝*/
+  a{
+    height:100%;
+    width: 100%;
+  }
+/* =========================== Shop Containers ===========================*/
+.storeContainer {
+  display: grid;
+  grid-template-columns: 6fr 4fr;
+  grid-template-rows: 7.5vh 7.5vh 10vh 75vh;
+  gap: 0px 0px;
+  grid-template-areas:
+    "navBarContainer navBarContainer"
+    "shopTitleContainer cartTitleContainer"
+    "productListContainer accountContainer"
+    "productListContainer cartContainer";
+}
+
+.shopTitleContainer {
+  grid-area: shopTitleContainer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--colorP7);
+  padding-left: 1vw;
+  padding-right: 1vw;
+  object-fit: contain;
+}
+
+.cartTitleContainer {
+  grid-area: cartTitleContainer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--colorP7);
+  padding-left: 1vw;
+  padding-right: 1vw;
+  object-fit: cover;
+}
+
+.productListContainer {
+  grid-area: productListContainer;
+  /* background-color: green; */
+  padding-left: 1vw;
+  padding-right: 1vw;
+  padding-top: 1vw;
+  overflow-y: scroll;
+}
+
+.productListContainer::-webkit-scrollbar {
+  width: 1vmin;
+}
+
+.productListContainer::-webkit-scrollbar-thumb {
+  border-radius: .3vmin;
+  background-color: var(--colorP6);
+}
+
+.productListContainer::-webkit-scrollbar-thumb:hover {
+  background-color: var(--colorR1);
+}
+
+.accountContainer {
+  grid-area: accountContainer;
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 1vmin;
+  padding-right: 1vmin;
+  object-fit: cover;
+  align-items: center;
+  justify-content: center;
+}
+
+.cartContainer {
+  grid-area: cartContainer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* background-color: purple; */
+  padding-left: 1vmin;
+  padding-right: 1vmin;
+  overflow-y: auto;
+}
+
+.cartContainer::-webkit-scrollbar {
+  width: 11px;
+}
+
+.cartContainer::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: var(--colorP6);
+}
+
+.cartContainer::-webkit-scrollbar-thumb:hover {
+  background-color: var(--colorR1);
+}
+
+/* =========================== Products ===========================*/
+.category {
+  /*full category block; ex: snack & products*/
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  background-color: var(--colorP7);
+  margin-bottom: 50px;
+}
+
+.catTitle {
+  /*title box for each category*/
+  font-weight: bold;
+  font-size: 2.4rem;
+  color: var(--colorP9);
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background-color: var(--colorR1);
+  border-radius: 20px;
+}
+
+.catList {
+  /*all products in the category*/
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 2px;
+}
+
+.product-image {
+  /*product image & container*/
+  object-fit: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px; /* Adjust width as needed */
+  height: 200px; /* Adjust height as needed */
+  border-radius: 20px;
+  background-color: var(--colorP5);
+}
+
+.product-item {
+  /*full product listing; pic, name, price, button, quantity*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 200px;
+  margin: 20px; /* Adjust as needed */
+  font-size: 1.5rem;
+}
+
+.productName {
+  /* product name & price*/
+  padding: 5px;
+  color: var(--colorP2);
+}
+
+.itemPrice{
+  margin-top: 5px;
+  font-size: 2.5rem;
+}
+
+.itemContainer {
+  margin: 5px;
+  border-radius: 20px;
+  background-color: var(--colorP65);
+  transition: .1s;
+}
+
+.itemContainer:hover{
+  background-color: var(--colorR2);
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: .1s;
+}
+
+.itemContainer:active{
+  transform: translateY(4px);
+}
+
+.itemContainer .quantitySpan {
+  background-color: var(--colorR1);
+  color: var(--colorP9);
+  border-radius: 100%;
+  padding: 2px 8px;
+  font-size: 20px;
+  right: 15px;
+}
+
+/* =========================== Account ===========================*/
+.selAccText{
+  font-weight: bold;
+  font-size: 2.5rem;
+  color: var(--colorR1);
+  margin: 0px;
+}
+
+.cartTable {
+  max-width: 700px;
+}
+
+.cartTable tr{
+  height: 5px;
+}
+
+.checkoutButton{
+  height:50px;
+  width: 500px;
+  margin-bottom: 10px;
+  background-color: var(--colorR1);
+}
+
+.checkoutButton:hover{
+  background-color: var(--colorR2);
+}
+
+/* =========================== Popup ===========================*/
+.popup-container {
+  display: none; /* Hide the popup by default */
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 9000; /* Ensure the popup appears on top */
+  overflow: none; /* Enable scrolling if needed */
+}
+
+.popup-content {  
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 6fr 2fr 2fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "popup-text popup-text"
+    "popup-select popup-select"
+    "popup-but1 popup-but2";
+  background-color: var(--colorP8);
+  margin: 5% auto; /* Center the popup vertically and horizontally */
+  width: 50%;
+  border-radius: 2vmin;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.popup-text { 
+  grid-area: popup-text;
+  text-align: center;
+  align-content: center;
+  font-weight: bold;
+  color: var(--colorP2);
+  margin: 0px;
+  font-size: 5vh;
+  padding: 10%;
+}
+
+.popup-select { grid-area: popup-select;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 2.5%;
+  padding-right: 2.5%;
+}
+.popup-but2 { 
+  grid-area: popup-but2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5%;
+}
+
+.popup-but1 { 
+  grid-area: popup-but1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5%;
+}
+
+.accountDropdown {
+  width: 100%;
+  height: 40%;
+}
+
+.createAccButton {
+  font-size: 4vh;
+  height: 100%;
+  width: 100%;
+}
+
+.close-button {
+    font-size: 4vh;
+    height: 100%;
+    width: 100%;
+}
+
+.close-button:disabled {
+  color: var(--colorP6);
+  background-color: var(--colorP7)
+}
+
+.close-button:disabled:hover {
+  transform: scale(1);
+  cursor: auto;
+}
+
+/* =========================== Popup ===========================*/
+.checkout-content {  
+  display: grid;
+  grid-template-columns: 5fr 5fr;
+  grid-template-rows: 2fr 1.5fr 5fr 2fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "checkoutTitle checkoutTitle"
+    "priceCon priceCon"
+    "venmoCon venmoCon"
+    "popup-but1 popup-but2";
+  background-color: var(--colorP8);
+  margin: 5% auto; /* Center the popup vertically and horizontally */
+  width: 50%;
+  border-radius: 2vmin;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.checkoutTitle{
+  grid-area: checkoutTitle;
+  text-align: center;
+  align-content: center;
+  font-weight: bold;
+  color: var(--colorP2);
+  margin: 0px;
+  font-size: 5vmin;
+  justify-content: center;
+  background-color: var(--colorP7);
+  border-radius: 2vmin;
+}
+
+.priceCon{
+  grid-area: priceCon;
+  color: var(--colorR1 );
+  font-size: 4vmin;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.venmoCon{
+  grid-area: venmoCon;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.venmoImg{
+  height: 30vmin;
+}

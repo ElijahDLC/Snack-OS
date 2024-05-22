@@ -1,0 +1,164 @@
+:root {
+  --colorP0: #333333;
+  --colorP1: #555555;
+  --colorP2: #777777;
+  --colorP3: #888888;
+  --colorP4: #999999;
+  --colorP5: #aaaaaa;
+  --colorP6: #bbbbbb;
+  --colorP65: #cccccc;
+  --colorP7: #dddddd;
+  --colorP8: #eeeeee;
+  --colorP9: #ffffff;
+  --colorB1: #1634a6;
+  --colorB2: #3771d4;
+  --colorR1: rgb(242, 20, 69);
+  --colorR2: #f5b0bf;
+  --colorY1: #3771d4;
+  --shadowP1: rgba(0, 0, 0, 0.2);
+  --shadowR1: rgba(242, 20, 69, 0.3);
+  --animation-duration: 150ms;
+  --animation-timing-curve: ease-in-out;
+}
+
+/*╔═════════════════════════════════════════════════════════════╗
+  ║                         Balances
+  ╚═════════════════════════════════════════════════════════════╝*/
+.balancesContainer {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  grid-template-rows: 7.5vh 7.5vh 15vh 70vh;
+  gap: 0px 0px;
+  grid-template-areas:
+    "navBarContainer navBarContainer" 
+    "accTableTitle selectedContainer"
+    "accTableContainer buttonContainer"
+    "accTableContainer blank"
+}
+
+.blank{
+  grid-area: blank;
+}
+
+/* =========================== Selected Account ===========================*/
+.selectedContainer{
+  grid-area: selectedContainer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+  font-size: 4vmin;
+  color: var(--colorP1);
+  margin: 0px;
+  padding-left: 1vmin;
+  padding-right: 1vmin;
+}
+
+.selected {
+  background-color: red;
+  color: var(--colorR1);
+  font-weight: bold;
+}
+
+/* =========================== Buttons ===========================*/
+.buttonContainer {
+  grid-area: buttonContainer;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-left: 1vmin;
+  padding-right: 1vmin;
+}
+
+.subButtonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.updateButton{
+  height: 70%;
+  width: 25%;
+  min-width: fit-content;
+  font-size: 2.5vmin;
+  margin: 1vmin;
+}
+
+.fillButton{
+  height: 70%;
+  width: 100%;
+  min-width: fit-content;
+  font-size: 2.5vmin;
+  margin: 1vmin;
+}
+
+button:disabled {
+  background-color: var(--colorP7);
+  color: var(--colorP8);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+input {
+  width: 75%;
+  height: 70%;
+  text-align: center;
+}
+
+.disabledText{
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* =========================== Table ===========================*/
+.accTableTitle {
+  grid-area: accTableTitle;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4vmin;
+  background-color: var(--colorP7);
+}
+
+.accTableContainer {
+  display: flex;
+  justify-content: center;
+  grid-area: accTableContainer;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  object-fit: contain;
+  overflow-y: scroll;
+  background-color: var(--colorP7);
+}
+
+.accTableContainer::-webkit-scrollbar {
+  width: 11px;
+}
+
+.accTableContainer::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: var(--colorP6);
+}
+
+.accTableContainer::-webkit-scrollbar-thumb:hover {
+  background-color: var(--colorR1);
+}
+
+.accTable {
+  max-width: 1000px;
+  height: fit-content;
+}
+
+.positive-balance {
+  color: red;
+}
+
+.negative-balance {
+  color: green;
+}

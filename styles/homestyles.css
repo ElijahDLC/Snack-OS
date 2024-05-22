@@ -1,0 +1,79 @@
+:root {
+  --colorP0: #333333;
+  --colorP1: #555555;
+  --colorP2: #777777;
+  --colorP3: #888888;
+  --colorP4: #999999;
+  --colorP5: #aaaaaa;
+  --colorP6: #bbbbbb;
+  --colorP65: #cccccc;
+  --colorP7: #dddddd;
+  --colorP8: #eeeeee;
+  --colorP9: #ffffff;
+  --colorB1: #1634a6;
+  --colorB2: #3771d4;
+  --colorR1: rgb(242, 20, 69);
+  --colorR2: #f5b0bf;
+  --colorY1: #3771d4;
+  --shadowP1: rgba(0, 0, 0, 0.2);
+  --shadowR1: rgba(242, 20, 69, 0.3);
+  --animation-duration: 150ms;
+  --animation-timing-curve: ease-in-out;
+}
+
+/*╔═════════════════════════════════════════════════════════════╗
+  ║                             Home
+  ╚═════════════════════════════════════════════════════════════╝*/
+.homeContainer {
+  display: grid;
+  grid-template-columns: 1fr 10fr 1fr;
+  grid-template-rows: 3fr 7fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "lSpace mTitleContainer rSpace"
+    "lSpace mNavContainer rSpace";
+}
+
+.mTitleContainer {
+  grid-area: mTitleContainer;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  object-fit: contain;
+}
+
+.mNavContainer {
+  grid-area: mNavContainer;
+  padding: 1vmin;
+}
+
+.lSpace {
+  grid-area: lSpace;
+}
+.rSpace {
+  grid-area: rSpace;
+}
+
+.mTitleMain{
+  margin-top: 10vmin;
+  text-align: center;
+  font-size: 14vmin;
+  font-weight: bold;
+}
+
+.mTitleSub{
+  color: var(--colorP6);
+  font-size: 4vmin;
+  margin-top: -3vmin;
+  margin-left: 75vmin;
+}
+
+.mainButton {
+  font-size: 4vmin;
+  width: 100%;
+  padding: 15px;
+  margin-top: 1vmin;
+  margin-bottom: 1vmin;
+  box-shadow: 3px 3px 5px var(--shadowP1);
+}
