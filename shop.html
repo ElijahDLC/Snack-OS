@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simple Shopping Cart</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/shopstyles.css" />
 </head>
 <body onload="showPopup()">
     <div class="storeContainer">
@@ -12,16 +13,14 @@
         <!-- =========================== TopBar =========================== -->
         <div class="navBarContainer">
             <a href="index.html">
-                <button class="navButton">
-                    <div class="buttonText">Back</div>
-                </button>
+                <button class="navButton">Back</button>
             </a>
         </div>
 
         <!-- =========================== Shop Title=========================== -->
         <div class="shopTitleContainer">
             <h2>Shop</h2>
-        </div>
+        </div> 
 
         <!-- =========================== Cart Title =========================== -->
         <div class="cartTitleContainer">
@@ -48,14 +47,14 @@
 
         <!-- =========================== Account =========================== -->
         <div class="accountContainer">
-            <p id="selectedAccount">Selected Account:</p>
+            <p id="selectedAccount" class="selAccText">Selected Account: None</p>
         </div>
 
         <!-- =========================== Cart =========================== -->
         <div class="cartContainer">
             <table class="cartTable" id="cart">
                 <thead>
-                    <tr>
+                    <tr> 
                         <th>Item</th>
                         <th>Price</th>
                         <th> # </th>
@@ -72,281 +71,321 @@
                     </tr>
                 </tfoot>
             </table>
-            <button class="checkoutButton" onclick="checkout()">Checkout</button>
+            <button class="checkoutButton" onclick="showPopup()">Account Select</button>
+            <button class="checkoutButton" onclick="showCheckout()">Checkout</button>
         </div>
     </div>
 
-
-    <!-- =========================== Account Pop Up =========================== -->
-    <div id="popup" class="popup-container">
-        <!-- Popup content -->
-        <div class="popup-content">
-            <h2>Select an Account or Create a New One</h2>
-            <select class="accountDropdown" id="name-dropdown">
-                <option value="" selected disabled>Choose account</option>
-            </select>
-            <button class="createAccButton" onclick="createAccount()">Create Account</button>
-            <button class="close-button" id="closeButton" onclick="hidePopup()" disabled>Select</button>
+        <!-- =========================== Account Pop Up =========================== -->
+        <div id="popup" class="popup-container" onclick="hidePopup()">
+            <!-- Popup content -->
+            <div class="popup-content" onclick="event.stopPropagation()">
+                <div class="popup-text">Select an Account or Create a New One</div>
+                <div class="popup-select">
+                    <select class="accountDropdown" id="name-dropdown">
+                        <option value="" selected disabled>Choose account</option>
+                    </select>
+                </div>
+                <div class="popup-but1"><button class="createAccButton" onclick="createAccount()">Create Account</button></div>
+                <div class="popup-but2"><button class="close-button" id="closeButton" onclick="hidePopup()" disabled>Select</button></div>
+            </div>
         </div>
-    </div>
-
-    <script>
-        var cart = [];
-        var names = [];
-        var products;
-
-        function renderProducts(containerId, products) {
-            var container = document.getElementById(containerId);
-            products.forEach(function (product) {
-                var itemContainer = document.createElement("div");
-                itemContainer.classList.add("itemContainer");
-                itemContainer.addEventListener("click", function () {
-                    addToCart(product.Name, product.Price);
-                    updateQuantity(itemContainer);
+    
+        <!-- =========================== Checkout =========================== -->
+        <div id="checkWin" class="popup-container" onclick="hideCheckout()">
+            <!-- Popup content -->
+            <div class="checkout-content" onclick="event.stopPropagation()">
+                <div class="checkoutTitle ">Checkout</div>
+                <div class="priceCon"><div id="checkout-total-price">$0.00</div></div>
+                <div class="venmoCon"><img class="venmoImg" src="/img/venmo.png"></img></div>
+                <div class="popup-but1">
+                    <a href="index.html">
+                        <button class="createAccButton">Cash/Venmo</button>
+                    </a>
+                </div>
+                <div class="popup-but2"><button class="close-button" onclick="checkout()">IOU</button></div>
+            </div>
+        </div>
+    
+        <script>
+            var cart = [];
+            var names = [];
+            var products;
+            var selectedAccount = null;
+    
+            function renderProducts(containerId, products) {
+                var container = document.getElementById(containerId);
+                products.forEach(function (product) {
+                    var itemContainer = document.createElement("div");
+                    itemContainer.classList.add("itemContainer");
+                    itemContainer.addEventListener("click", function () {
+                        addToCart(product.Name, product.Price);
+                        updateQuantity(itemContainer);
+                    });
+    
+                    var div = document.createElement("div");
+                    div.classList.add("product-item");
+                    var nameSpan = document.createElement("span");
+                    var br = document.createElement("br");
+                    var img = document.createElement("img");
+                    nameSpan.textContent = product.Name;
+                    var priceSpan = document.createElement("span");
+                    priceSpan.textContent = "$" + product.Price.toFixed(2);
+                    priceSpan.classList.add("itemPrice");
+                    nameSpan.appendChild(br);
+                    nameSpan.classList.add("productName");
+    
+                    var quantitySpan = document.createElement("span");
+                    quantitySpan.textContent = "0"; // Initial quantity is 0
+                    quantitySpan.classList.add("quantitySpan");
+    
+                    img.src = product.img;
+                    img.alt = product.Name;
+                    img.classList.add("product-image");
+                    div.appendChild(priceSpan)
+                    div.appendChild(img);
+                    div.appendChild(nameSpan);
+                    itemContainer.appendChild(div);
+                    container.appendChild(itemContainer);
                 });
-
-                var div = document.createElement("div");
-                div.classList.add("product-item");
-                var nameSpan = document.createElement("span");
-                var br = document.createElement("br");
-                var img = document.createElement("img");
-                nameSpan.textContent = product.Name;
-                var priceSpan = document.createElement("span");
-                priceSpan.textContent = "$" + product.Price.toFixed(2);
-                priceSpan.classList.add("itemPrice");
-                nameSpan.appendChild(br);
-                nameSpan.classList.add("productName");
-
-                var quantitySpan = document.createElement("span");
-                quantitySpan.textContent = "0"; // Initial quantity is 0
-                quantitySpan.classList.add("quantitySpan");
-
-                img.src = product.img;
-                img.alt = product.Name;
-                img.classList.add("product-image");
-                div.appendChild(priceSpan)
-                div.appendChild(img);
-                div.appendChild(nameSpan);
-                itemContainer.appendChild(div);
-                container.appendChild(itemContainer);
-            });
-        }
-
-        function updateQuantity(itemContainer) {
-            var quantitySpan = itemContainer.querySelector(".quantitySpan");
-            if (quantitySpan) {
-                var currentQuantity = parseInt(quantitySpan.textContent);
-                quantitySpan.textContent = currentQuantity + 1;
             }
-        }
-
-        var xhrProducts = new XMLHttpRequest();
-        xhrProducts.onreadystatechange = function () {
-            if (xhrProducts.readyState === XMLHttpRequest.DONE) {
-                if (xhrProducts.status === 200) {
-                    products = JSON.parse(xhrProducts.responseText);
-                    renderProducts("drinks", products.products.drinks);
-                    renderProducts("freezer", products.products.freezer);
-                    renderProducts("snacks", products.products.snacks);
-                } else {
-                    console.error("Failed to load products.");
+    
+            function updateQuantity(itemContainer) {
+                var quantitySpan = itemContainer.querySelector(".quantitySpan");
+                if (quantitySpan) {
+                    var currentQuantity = parseInt(quantitySpan.textContent);
+                    quantitySpan.textContent = currentQuantity + 1;
                 }
             }
-        };
-
-        function showPopup() {
-            var popup = document.getElementById('popup');
-            popup.style.display = 'block'; // Display the popup
-            // Populate the dropdown menu with account names
-            populateNameDropdown();
-        }
-
-        function hidePopup() {
-            var popup = document.getElementById('popup');
-            popup.style.display = 'none'; // Hide the popup
-        }
-
-        function populateNameDropdown() {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        var response = JSON.parse(xhr.responseText);
-                        names = response.balances;
-                        var dropdown = document.getElementById("name-dropdown");
-                        dropdown.addEventListener("change", function () {
-                            var selectedAccount = document.getElementById("selectedAccount");
-                            selectedAccount.textContent = "Selected Account: " + dropdown.value;
+    
+            var xhrProducts = new XMLHttpRequest();
+            xhrProducts.onreadystatechange = function () {
+                if (xhrProducts.readyState === XMLHttpRequest.DONE) {
+                    if (xhrProducts.status === 200) {
+                        products = JSON.parse(xhrProducts.responseText);
+                        renderProducts("drinks", products.products.drinks);
+                        renderProducts("freezer", products.products.freezer);
+                        renderProducts("snacks", products.products.snacks);
+                    } else {
+                        console.error("Failed to load products.");
+                    }
+                }
+            };
+    
+            function showPopup() {
+                var popup = document.getElementById('popup');
+                popup.style.display = 'block'; // Display the popup
+                // Populate the dropdown menu with account names
+                populateNameDropdown();
+            }
+    
+            function hidePopup() {
+                var popup = document.getElementById('popup');
+                popup.style.display = 'none'; // Hide the popup
+                // Update selected account text
+                var selectedName = document.getElementById("name-dropdown").value;
+                if (selectedName) {
+                    selectedAccount = selectedName;
+                    document.getElementById("selectedAccount").textContent = "Selected Account: " + selectedName;
+                }
+            }
+    
+            function showCheckout() {
+                if (!selectedAccount) {
+                    alert("Please select an account first");
+                    return;
+                }
+                var checkWin = document.getElementById('checkWin');
+                checkWin.style.display = 'block'; // Display the popup
+                document.getElementById("checkout-total-price").textContent = document.getElementById("total-price").textContent;
+            }
+    
+            function hideCheckout() {
+                var checkWin = document.getElementById('checkWin');
+                checkWin.style.display = 'none'; // Hide the popup
+            }
+    
+            function populateNameDropdown() {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            var response = JSON.parse(xhr.responseText);
+                            names = response.balances;
+                            var dropdown = document.getElementById("name-dropdown");
+                            dropdown.addEventListener("change", function () {
+                                var selectedAccount = document.getElementById("selectedAccount");
+                                selectedAccount.textContent = "Selected Account: " + dropdown.value;
+                                var closeButton = document.getElementById("closeButton");
+                                closeButton.disabled = false;
+                            });
+                            dropdown.innerHTML = ""; // Clear previous options
+                            var defaultOption = document.createElement("option");
+                            defaultOption.value = "";
+                            defaultOption.text = "Choose account";
+                            defaultOption.disabled = true;
+                            defaultOption.selected = true;
+                            dropdown.appendChild(defaultOption);
+                            names.forEach(function (nameObj) {
+                                var option = document.createElement("option");
+                                option.value = nameObj.name;
+                                option.text = nameObj.name;
+                                dropdown.appendChild(option);
+                            });
+    
+                            // Enable or disable close button based on account selection
                             var closeButton = document.getElementById("closeButton");
-                            closeButton.disabled = false;
-                        });
-                        dropdown.innerHTML = ""; // Clear previous options
-                        var defaultOption = document.createElement("option");
-                        defaultOption.value = "";
-                        defaultOption.text = "Choose account";
-                        defaultOption.disabled = true;
-                        defaultOption.selected = true;
-                        dropdown.appendChild(defaultOption);
-                        names.forEach(function (nameObj) {
-                            var option = document.createElement("option");
-                            option.value = nameObj.name;
-                            option.text = nameObj.name;
-                            dropdown.appendChild(option);
-                        });
-
-                        // Enable or disable close button based on account selection
-                        var closeButton = document.getElementById("closeButton");
-                        if (dropdown.value === "") {
-                            closeButton.disabled = true;
+                            if (dropdown.value === "") {
+                                closeButton.disabled = true;
+                            } else {
+                                closeButton.disabled = false;
+                            }
                         } else {
-                            closeButton.disabled = false;
+                            console.error("Failed to load names.");
                         }
-                    } else {
-                        console.error("Failed to load names.");
                     }
+                };
+                xhr.open("GET", "balances.json", true);
+                xhr.send();
+            }
+    
+            function createAccount() {
+                var newName = prompt("Enter your name:");
+                if (newName === null || newName.trim() === "") {
+                    alert("Name cannot be empty.");
+                    return;
                 }
-            };
-            xhr.open("GET", "balances.json", true);
-            xhr.send();
-        }
-
-        function createAccount() {
-            var newName = prompt("Enter your name:");
-            if (newName === null || newName.trim() === "") {
-                alert("Name cannot be empty.");
-                return;
-            }
-
-            if (names.some((nameObj) => nameObj.name === newName)) {
-                alert("Name already exists. Please choose a different name.");
-                return;
-            }
-
-            var insertIndex = names.findIndex((nameObj) => nameObj.name > newName);
-            if (insertIndex === -1) {
-                insertIndex = names.length;
-            }
-
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        alert("Account created successfully for " + newName + "!");
-                        names.splice(insertIndex, 0, { name: newName, balance: 0 });
-                        populateNameDropdown();
-                    } else {
-                        alert("Failed to create account.");
+    
+                if (names.some((nameObj) => nameObj.name === newName)) {
+                    alert("Name already exists. Please choose a different name.");
+                    return;
+                }
+    
+                var insertIndex = names.findIndex((nameObj) => nameObj.name > newName);
+                if (insertIndex === -1) {
+                    insertIndex = names.length;
+                }
+    
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            alert("Account created successfully for " + newName + "!");
+                            names.splice(insertIndex, 0, { name: newName, balance: 0 });
+                            populateNameDropdown();
+                            // Update selected account
+                            selectedAccount = newName;
+                            document.getElementById("selectedAccount").textContent = "Selected Account: " + newName;
+                        } else {
+                            alert("Failed to create account.");
+                        }
                     }
-                }
-            };
-            xhr.open("POST", "http://localhost:3000/create-account", true);
-            xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.send(JSON.stringify({ name: newName }));
-        }
-
-        function addToCart(name, price) {
-            var foundItem = cart.find(item => item.Name === name);
-            if (foundItem) {
-                foundItem.Quantity++;
-            } else {
-                cart.push({ Name: name, Price: price, Quantity: 1 });
+                };
+                xhr.open("POST", "http://localhost:3000/create-account", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.send(JSON.stringify({ name: newName }));
             }
-            renderCart();
-        }
-
-        function removeFromCart(name) {
-            var foundIndex = cart.findIndex(item => item.Name === name);
-            if (foundIndex !== -1) {
-                var item = cart[foundIndex];
-                if (item.Quantity > 1) {
-                    item.Quantity--;
+    
+            function addToCart(name, price) {
+                var foundItem = cart.find(item => item.Name === name);
+                if (foundItem) {
+                    foundItem.Quantity++;
                 } else {
-                    cart.splice(foundIndex, 1);
-                    item.Quantity--;
+                    cart.push({ Name: name, Price: price, Quantity: 1 });
                 }
+                renderCart();
             }
-            renderCart();
-        }
-
-        function renderCart() {
-            var cartItems = document.getElementById("cart-items");
-            cartItems.innerHTML = "";
-
-            var totalPrice = 0;
-
-            cart.forEach(function (item) {
-                var row = document.createElement("tr");
-                var nameCell = document.createElement("td");
-                var priceCell = document.createElement("td");
-                var quantityCell = document.createElement("td");
-                var actionCell = document.createElement("td");
-                var removeButton = document.createElement("button");
-                removeButton.textContent = "X";
-                removeButton.addEventListener("click", function () {
-                    removeFromCart(item.Name);
-                });
-
-                nameCell.textContent = item.Name;
-                priceCell.textContent = "$" + (item.Price * item.Quantity).toFixed(2);
-                quantityCell.textContent = item.Quantity;
-                actionCell.appendChild(removeButton);
-
-                row.appendChild(nameCell);
-                row.appendChild(priceCell);
-                row.appendChild(quantityCell);
-                row.appendChild(actionCell);
-
-                cartItems.appendChild(row);
-
-                totalPrice += item.Price * item.Quantity;
-            });
-
-            document.getElementById("total-price").textContent =
-                "$" + totalPrice.toFixed(2);
-        }
-
-        function checkout() {
-            var selectedName = document.getElementById("name-dropdown").value;
-            if (!selectedName) {
-                alert("Please select an account first"); 
-                return;
-            }
-
-            var totalPrice = parseFloat(
-                document.getElementById("total-price").textContent.substring(1)
-            );
-            if (isNaN(totalPrice)) {
-                alert("Total price is not valid.");
-                return;
-            }
-
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        alert(
-                            "Checkout completed for " +
-                            selectedName +
-                            "! Total amount: $" +
-                            totalPrice.toFixed(2)
-                        );
-                        exportToExcel();
-                        cart = [];
-                        renderCart();
+    
+            function removeFromCart(name) {
+                var foundIndex = cart.findIndex(item => item.Name === name);
+                if (foundIndex !== -1) {
+                    var item = cart[foundIndex];
+                    if (item.Quantity > 1) {
+                        item.Quantity--;
                     } else {
-                        alert("Failed to update balances.");
+                        cart.splice(foundIndex, 1);
                     }
                 }
-            };
-            xhr.open("POST", "http://localhost:3000/update-balances", true);
-            xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.send(
-                JSON.stringify({ name: selectedName, totalPrice: totalPrice })
-            );
-        }
-
-        xhrProducts.open("GET", "balances.json", true);
-        xhrProducts.send();
-    </script>
-</body>
-</html>
+                renderCart();
+            }
+    
+            function renderCart() {
+                var cartItems = document.getElementById("cart-items");
+                cartItems.innerHTML = "";
+    
+                var totalPrice = 0;
+    
+                cart.forEach(function (item) {
+                    var row = document.createElement("tr");
+                    var nameCell = document.createElement("td");
+                    var priceCell = document.createElement("td");
+                    var quantityCell = document.createElement("td");
+                    var actionCell = document.createElement("td");
+                    var removeButton = document.createElement("button");
+                    removeButton.textContent = "X";
+                    removeButton.addEventListener("click", function () {
+                        removeFromCart(item.Name);
+                    });
+    
+                    nameCell.textContent = item.Name;
+                    priceCell.textContent = "$" + (item.Price * item.Quantity).toFixed(2);
+                    quantityCell.textContent = item.Quantity;
+                    actionCell.appendChild(removeButton);
+    
+                    row.appendChild(nameCell);
+                    row.appendChild(priceCell);
+                    row.appendChild(quantityCell);
+                    row.appendChild(actionCell);
+    
+                    cartItems.appendChild(row);
+    
+                    totalPrice += item.Price * item.Quantity;
+                });
+    
+                document.getElementById("total-price").textContent =
+                    "$" + totalPrice.toFixed(2);
+            }
+    
+            function checkout() {
+                if (!selectedAccount) {
+                    alert("Please select an account first");
+                    return;
+                }
+    
+                var totalPrice = parseFloat(
+                    document.getElementById("total-price").textContent.substring(1)
+                );
+                if (isNaN(totalPrice)) {
+                    alert("Total price is not valid.");
+                    return;
+                }
+    
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            alert(
+                                "Checkout completed for " +
+                                selectedAccount +
+                                "! Total amount: $" +
+                                totalPrice.toFixed(2)
+                            );
+                            cart = [];
+                            renderCart();
+                        } else {
+                            alert("Failed to update balances.");
+                        }
+                    }
+                };
+                xhr.open("POST", "http://localhost:3000/update-balances", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.send(
+                    JSON.stringify({ name: selectedAccount, totalPrice: totalPrice })
+                );
+            }
+    
+            xhrProducts.open("GET", "balances.json", true);
+            xhrProducts.send();
+        </script>
+    </body>
+    </html>
