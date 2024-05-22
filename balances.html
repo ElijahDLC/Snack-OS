@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Current Balances</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/balancestyles.css" />
 </head>
 <body>
 
 <!-- =========================== TopBar =========================== -->
 <div class="balancesContainer">  
-    <div class="bnavBarContainer">
+    <div class="navBarContainer">
         <a href="index.html">
             <button class="navButton">
                 <div class="buttonText">Back</div>
@@ -18,19 +19,37 @@
         </a>
     </div>
 
-    <div class="accTableTitle">
-        <h2>Current Balances</h2>
+    <!-- =========================== Selected Account =========================== -->
+    <div class="selectedContainer">
+        <div>Selected account: <span id="selected-account" ><span class="disabledText">None</span></span>
+        </div>
     </div>
 
+    <!-- =========================== Buttons =========================== -->
+    <div class="buttonContainer" id="button-container" style="display: none;">
+        <div class="subButtonContainer">
+            <input id="amount-input" type="number" step="0.01" min="0" placeholder="Enter $ amount here">
+            <button id="subtract-button" class="updateButton" disabled>Pay</button>
+        </div>
+        <div class="subButtonContainer">
+            <button id="clear-button" class="fillButton" disabled>Clear Balance</button>
+        </div>
+        <div class="subButtonContainer">
+            <button id="delete-button" class="fillButton" disabled>Delete Account</button>
+        </div>
+    </div>
+
+    <div class="blank"></div>
+    <!-- =========================== Title =========================== -->
+    <div class="accTableTitle">Current Balances</div>
+
+<!-- =========================== Table =========================== -->
     <div class="accTableContainer">
         <table class="accTable" id="balances-table">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Balance</th>
-                    <th>Clear</th>
-                    <th>Subtract</th>
-                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody id="balances-data">
@@ -41,6 +60,66 @@
 </div>
 
 <script>
+    var selectedRow = null;
+
+    function updateButtonState() {
+        var buttons = document.querySelectorAll('#clear-button, #subtract-button, #delete-button');
+        var selectedAccount = document.getElementById('selected-account');
+        var buttonContainer = document.getElementById('button-container');
+        if (selectedRow) {
+            buttons.forEach(button => button.disabled = false);
+            selectedAccount.textContent = selectedRow.cells[0].textContent;
+            selectedAccount.classList.add("fontColor");
+            buttonContainer.style.display = 'flex';
+        } else {
+            buttons.forEach(button => button.disabled = true);
+            selectedAccount.textContent = "Selected Account: None";
+            buttonContainer.style.display = 'none';
+        }
+    }
+
+    document.getElementById('clear-button').addEventListener('click', function() {
+        if (selectedRow) {
+            var name = selectedRow.cells[0].textContent;
+            var confirmReset = confirm("Are you sure you want to reset the balance for " + name + "?");
+            if (confirmReset) {
+                resetBalance(name);
+            }
+        } else {
+            alert("Please select a row first.");
+        }
+    });
+
+    document.getElementById('subtract-button').addEventListener('click', function() {
+        if (selectedRow) {
+            var name = selectedRow.cells[0].textContent;
+            var amountInput = document.getElementById('amount-input');
+            var amount = parseFloat(amountInput.value);
+            if (isNaN(amount) || amount <= 0) {
+                alert("Please enter a valid positive number.");
+                return;
+            }
+            var confirmSubtract = confirm("Are you sure you want to subtract $" + amount.toFixed(2) + " from the balance for " + name + "?");
+            if (confirmSubtract) {
+                subtractFromBalance(name, amount);
+            }
+        } else {
+            alert("Please select a row first.");
+        }
+    });
+
+    document.getElementById('delete-button').addEventListener('click', function() {
+        if (selectedRow) {
+            var name = selectedRow.cells[0].textContent;
+            var confirmDelete = confirm("Are you sure you want to delete " + name + "'s account?");
+            if (confirmDelete) {
+                deleteEntry(name);
+            }
+        } else {
+            alert("Please select a row first.");
+        }
+    });
+
     function fetchBalances() {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
@@ -70,65 +149,24 @@
 
         balances.forEach(function(account) {
             var row = document.createElement("tr");
+            row.addEventListener("click", function() {
+                if (selectedRow) {
+                    selectedRow.classList.remove("selected");
+                }
+                selectedRow = this;
+                this.classList.add("selected");
+                updateButtonState();
+            });
+
             var nameCell = document.createElement("td");
             var balanceCell = document.createElement("td");
-            var deleteCell = document.createElement("td");
-            var resetCell = document.createElement("td");
-            var subtractCell = document.createElement("td");
-            var deleteButton = document.createElement("button");
-            var resetButton = document.createElement("button");
-            var subtractButton = document.createElement("button");
-            var amountInput = document.createElement("input");
 
             nameCell.textContent = account.name;
             balanceCell.textContent = "$" + account.balance.toFixed(2);
             balanceCell.classList.add(account.balance > 0 ? "positive-balance" : "negative-balance");
-            deleteButton.textContent = "X";
-            deleteButton.classList.add("delete-button");
-            resetButton.textContent = "Clear";
-            resetButton.classList.add("reset-button");
-            subtractButton.textContent = "Update";
-            subtractButton.classList.add("subtract-button");
-            amountInput.type = "number";
-            amountInput.step = "0.01";
-            amountInput.min = "0";
-
-            deleteButton.addEventListener("click", function() {
-                var confirmDelete = confirm("Are you sure you want to delete this entry?");
-                if (confirmDelete) {
-                    deleteEntry(account.name);
-                }
-            });
-
-            resetButton.addEventListener("click", function() {
-                var confirmReset = confirm("Are you sure you want to reset the balance for " + account.name + "?");
-                if (confirmReset) {
-                    resetBalance(account.name);
-                }
-            });
-
-            subtractButton.addEventListener("click", function() {
-                var amount = parseFloat(amountInput.value);
-                if (isNaN(amount) || amount <= 0) {
-                    alert("Please enter a valid positive number.");
-                    return;
-                }
-                var confirmSubtract = confirm("Are you sure you want to subtract $" + amount.toFixed(2) + " from the balance for " + account.name + "?");
-                if (confirmSubtract) {
-                    subtractFromBalance(account.name, amount);
-                }
-            });
-
-            deleteCell.appendChild(deleteButton);
-            resetCell.appendChild(resetButton);
-            subtractCell.appendChild(amountInput);
-            subtractCell.appendChild(subtractButton);
 
             row.appendChild(nameCell);
             row.appendChild(balanceCell);
-            row.appendChild(resetCell);
-            row.appendChild(subtractCell);
-            row.appendChild(deleteCell);
 
             balancesData.appendChild(row);
         });
@@ -184,6 +222,7 @@
 
     fetchBalances();
 </script>
+
 
 </body>
 </html>
