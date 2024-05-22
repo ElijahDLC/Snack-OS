@@ -36,7 +36,7 @@ body {
 
 h2 {
   font-weight: bold;
-  font-size: 3rem;
+  font-size: 3vmin;
   color: var(--colorP1);
   margin: 0px;
 }
@@ -48,13 +48,14 @@ table {
   border-radius: 20px;
   border-collapse: collapse;
   margin-bottom: 20px;
+  color: var(--colorP2);
 }
 
 table,
 th,
 td {
   padding: 8px;
-  font-size: 1.5rem;
+  font-size: 3vmin;
 }
 
 tr {
@@ -104,8 +105,8 @@ tbody tr:nth-child(even):hover {
 
 /* =========================== Elements ===========================*/
 button {
-  font-size: 1.5rem;
-  border-radius: 10px;
+  font-size: 1.5vmin;
+  border-radius: 1vmin;
   background-color: var(--colorP5);
   color: var(--colorP8);
   border-color: transparent;
@@ -126,11 +127,12 @@ button:active{
 
 select {
   appearance: none;
-  font-size: 1.5rem;
+  font-size: 2.5vmin;
+  margin: 1vmin;
   background-color: var(--colorP9);
   border-radius: 10px;
   border: none;
-  color: var(--colorP1);
+  color: var(--colorP2);
   cursor: pointer;
   box-shadow: 3px 3px 5px var(--shadowP1);
   transition: .1s;
@@ -144,445 +146,35 @@ select:hover{
 input {
   appearance: none;
   border: none;
-  font-size: 1.5rem;
+  font-size: 2.5vmin;
+  margin: 1vmin;
   background-color: var(--colorP9);
   color: var(--colorP1);
-  border-radius: 10px;
+  border-radius: 1vmin;
   box-shadow: 3px 3px 5px var(--shadowP1);
-  width: 100px;
-  margin-right: 10px;
-}
-
-/*╔═════════════════════════════════════════════════════════════╗
-  ║                             Home
-  ╚═════════════════════════════════════════════════════════════╝*/
-.homeContainer {
-  display: grid;
-  grid-template-columns: 1fr 10fr 1fr;
-  grid-template-rows: 3fr 7fr;
-  gap: 0px 0px;
-  grid-template-areas:
-    "lSpace mTitleContainer rSpace"
-    "lSpace mNavContainer rSpace";
-}
-
-.mTitleContainer {
-  grid-area: mTitleContainer;
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  object-fit: contain;
-}
-
-.mNavContainer {
-  grid-area: mNavContainer;
-  padding: 10px;
-  object-fit: contain;
-}
-
-.lSpace {
-  grid-area: lSpace;
-}
-.rSpace {
-  grid-area: rSpace;
-}
-
-.mTitleMain{
-  margin-top: 100px;
-  text-align: center;
-  font-size: 12rem;
-  font-weight: bold;
-}
-
-.fontColor{
-  color: var(--colorR1);
-}
-
-.mTitleSub{
-  color: var(--colorP6);
-  font-size: 3.5rem;
-  margin-top: -30px;
-  margin-left: 975px;
-}
-
-.mainButton {
-  font-size: 3rem;
-  width: 100%;
-  padding: 15px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border: 15px;
-  box-shadow: 3px 3px 5px var(--shadowP1);
-}
-
-/*╔═════════════════════════════════════════════════════════════╗
-  ║                             Shop 
-  ╚═════════════════════════════════════════════════════════════╝*/
-/* =========================== Shop Containers ===========================*/
-.storeContainer {
-  display: grid;
-  grid-template-columns: 6fr 4fr;
-  grid-template-rows: 7.5vh 7.5vh 10vh 75vh;
-  gap: 0px 0px;
-  grid-template-areas:
-    "navBarContainer navBarContainer"
-    "shopTitleContainer cartTitleContainer"
-    "productListContainer accountContainer"
-    "productListContainer cartContainer";
 }
 
 .navBarContainer {
   grid-area: navBarContainer;
-  padding-top: 5px;
+  align-content: center;
+  z-index: 9001; /* Ensure the popup appears on top */
   padding-left: 20px;
   background-color: var(--colorP6);
 }
 
-.shopTitleContainer {
-  grid-area: shopTitleContainer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--colorP7);
-  padding-left: 1vw;
-  padding-right: 1vw;
-  object-fit: contain;
-}
-
-.cartTitleContainer {
-  grid-area: cartTitleContainer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--colorP7);
-  padding-left: 1vw;
-  padding-right: 1vw;
-  object-fit: cover;
-}
-
-.productListContainer {
-  grid-area: productListContainer;
-  /* background-color: green; */
-  padding-left: 1vw;
-  padding-right: 1vw;
-  padding-top: 1vw;
-  overflow-y: scroll;
-}
-
-.productListContainer::-webkit-scrollbar {
-  width: 11px;
-}
-
-.productListContainer::-webkit-scrollbar-thumb {
-  border-radius: 5px;
-  background-color: var(--colorP6);
-}
-
-.productListContainer::-webkit-scrollbar-thumb:hover {
-  background-color: var(--colorR1);
-}
-
-.accountContainer {
-  grid-area: accountContainer;
-  display: flex;
-  flex-wrap: wrap;
-  padding-left: 1vw;
-  padding-right: 1vw;
-  object-fit: cover;
-  align-items: center;
-  justify-content: center;
-}
-
-.cartContainer {
-  grid-area: cartContainer;
-  /* background-color: purple; */
-  padding-left: 1vw;
-  padding-right: 1vw;
-  overflow-y: auto;
-}
-
-.cartContainer::-webkit-scrollbar {
-  width: 11px;
-}
-
-.cartContainer::-webkit-scrollbar-thumb {
-  border-radius: 5px;
-  background-color: var(--colorP6);
-}
-
-.cartContainer::-webkit-scrollbar-thumb:hover {
-  background-color: var(--colorR1);
-}
-
-/* =========================== Navbar ===========================*/
 .navButton {
   aspect-ratio: 2/1;
   height: 80%;
-  object-fit: cover;
   border-radius: 10px;
   color: var(--colorP8);
   border-color: transparent;
+  font-size: 3vh;
 }
-
+      
 .navButton:hover {
   background-color: var(--colorR1);
 }
 
-.buttonText {
-  object-fit: cover;
-  font-size: 3.5rem;
-}
-
-/* =========================== Products ===========================*/
-.category {
-  /*full category block; ex: snack & products*/
-  display: flex;
-  flex-direction: column;
-  border-radius: 20px;
-  background-color: var(--colorP7);
-  margin-bottom: 50px;
-}
-
-.catTitle {
-  /*title box for each category*/
-  font-weight: bold;
-  font-size: 2.4rem;
-  color: var(--colorP9);
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-  background-color: var(--colorR1);
-  border-radius: 20px;
-}
-
-.catList {
-  /*all products in the category*/
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 2px;
-}
-
-.product-image {
-  /*product image & container*/
-  object-fit: contain;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 200px; /* Adjust width as needed */
-  height: 200px; /* Adjust height as needed */
-  border-radius: 20px;
-  background-color: var(--colorP5);
-}
-
-.product-item {
-  /*full product listing; pic, name, price, button, quantity*/
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: 200px;
-  margin: 20px; /* Adjust as needed */
-  font-size: 1.5rem;
-}
-
-.productName {
-  /* product name & price*/
-  padding: 5px;
-  color: var(--colorP2);
-}
-
-.itemPrice{
-  margin-top: 5px;
-  font-size: 2.5rem;
-}
-
-/* .add-to-cart-button {
-  font-size: 1.5rem;
-  border-radius: 10px;
-  background-color: var(--colorP5);
-  color: var(--colorP8);
-  border-color: transparent;
-  box-shadow: 3px 3px 5px var(--shadowP1);
-}
-
-.add-to-cart-button:hover {
-  background-color: var(--colorR1);
-} */
-
-.itemContainer {
-  margin: 5px;
-  border-radius: 20px;
-  background-color: var(--colorP65);
-  transition: .1s;
-}
-
-.itemContainer:hover{
-  background-color: var(--colorR2);
-  cursor: pointer;
-  transform: scale(1.1);
-  transition: .1s;
-}
-
-.itemContainer:active{
-  transform: translateY(4px);
-}
-
-.itemContainer .quantitySpan {
-  background-color: var(--colorR1);
-  color: var(--colorP9);
-  border-radius: 100%;
-  padding: 2px 8px;
-  font-size: 20px;
-  right: 15px;
-}
-
-/* =========================== Account ===========================*/
-.accountDropdown {
-  height: 40%;
-  min-width: 60%;
-}
-
-.createAccButton {
-  height: 40%;
-  font-size: 1.4rem;
-}
-
-.chooseAccount {
-  background-color: var(--colorR1);
-}
-
-.cartTable {
-  max-width: 500px;
-}
-
-.checkoutButton{
-  height:50px;
-  width: 500px;
-  background-color: var(--colorR1);
-}
-
-.checkoutButton:hover{
-  background-color: var(--colorR2);
-}
-
-
-.popup-container {
-  display: none; /* Hide the popup by default */
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  z-index: 9999; /* Ensure the popup appears on top */
-  overflow: auto; /* Enable scrolling if needed */
-}
-
-/* Popup content */
-.popup-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* Center the popup vertically and horizontally */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 50%;
-  max-width: 400px; /* Set a maximum width */
-  border-radius: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-}
-
-/* Close button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.close-button {
-    z-index: 9999;
-}
-
-.close-button:disabled {
-  color: var(--colorP65);
-  background-color: var(--colorP7)
-}
-
-.close-button:disabled:hover {
-  transform: scale(1);
-  cursor: auto;
-}
-
-/*╔═════════════════════════════════════════════════════════════╗
-  ║                         Balances
-  ╚═════════════════════════════════════════════════════════════╝*/
-.balancesContainer {
-  display: grid;
-  grid-template-columns: 10fr;
-  grid-template-rows: 7.5vh 7.5vh 85vh;
-  gap: 0px 0px;
-  grid-template-areas:
-    "bnavBarContainer"
-    "accTableTitle"
-    "accTableContainer";
-}
-
-.bnavBarContainer {
-  grid-area: bnavBarContainer;
-  padding-top: 5px;
-  padding-left: 20px;
-  background-color: var(--colorP6);
-}
-
-.accTableTitle {
-  grid-area: accTableTitle;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.accTableContainer {
-  display: flex;
-  justify-content: center;
-  grid-area: accTableContainer;
-  padding-left: 1vw;
-  padding-right: 1vw;
-  object-fit: contain;
-  overflow-y: scroll;
-}
-
-.accTableContainer::-webkit-scrollbar {
-  width: 11px;
-}
-
-.accTableContainer::-webkit-scrollbar-thumb {
-  border-radius: 5px;
-  background-color: var(--colorP6);
-}
-
-.accTableContainer::-webkit-scrollbar-thumb:hover {
-  background-color: var(--colorR1);
-}
-
-.accTable {
-  max-width: 1000px;
-  height: fit-content;
-}
-
-.positive-balance {
-  color: red;
-}
-
-.negative-balance {
-  color: green;
+.fontColor{
+  color: var(--colorR1);
 }
